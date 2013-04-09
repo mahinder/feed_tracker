@@ -1,0 +1,4 @@
+validates :user_name, :presence => true, :uniqueness => true // sequence problem
+
+
+Your controller specs should be in the spec/controllers/ folder. However, you may want for some reason to have some other files that run controller specs (for example, I'm testing markup validation in a separate test file)

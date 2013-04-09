@@ -1,0 +1,18 @@
+<div class="row" >
+  <div class="span9">
+    <div class="field row ">
+      <div class="span6">
+        Organisation Name :   <%= current_user.user_name  %></br>
+        Email :   <%= current_user.email  %></br>
+        Organisation Key :   <span class="org_key"><%= key_exists 'organisation_key'%></span></br>
+        Access Token :   <span class="access_key"><%= key_exists 'access_token' %></span></br>
+        <%  if current_user.api_key.blank? %> 
+          <%= link_to("Key generator" , "#",:class => "btn first_time_button" ,  :id => "key_genrator") %>
+        <%else%>  
+          <%= link_to("reset" , "#",:class => "btn key_reset" , :data_api => (current_user.api_key.id if current_user.api_key )) %>
+        <%end%>  
+          <%=  link_to("reset" , "#",:class => "btn hide first_time_button key_reset" ,:data_api => (current_user.api_key.id if current_user.api_key )) %>
+      </div>
+    </div>
+  </div>
+</div>
