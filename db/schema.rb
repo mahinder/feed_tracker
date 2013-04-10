@@ -21,21 +21,29 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.string   "url",                 :limit => 1024
+    t.string   "phone1"
+    t.string   "phone2"
+    t.string   "fax"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.integer  "country_id",                          :default => 1
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.integer  "verified_company_id"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  add_index "companies", ["verified_company_id"], :name => "ix_comp_verified_comp_id"
+
+  create_table "companies_in_news", :force => true do |t|
+    t.integer "feed_entry_id"
+    t.integer "company_id"
+  end
 
   create_table "feed_entries", :force => true do |t|
     t.string   "headline"
@@ -44,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.text     "description"
     t.boolean  "is_enriched",  :default => false
     t.integer  "feed_url_id"
+    t.text     "calais_data"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
@@ -53,6 +62,35 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.string   "feed_url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "industries", :force => true do |t|
+    t.string "name"
+  end
+
+  add_index "industries", ["name"], :name => "index_industries_on_name"
+
+  create_table "industries_in_news", :force => true do |t|
+    t.integer "feed_entry_id"
+    t.integer "industry_id"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.integer  "current_company_id"
+    t.integer  "last_company_id"
+    t.integer  "current_designation_id"
+    t.integer  "last_designation_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "people_in_news", :force => true do |t|
+    t.integer "feed_entry_id"
+    t.integer "person_id"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -86,5 +124,16 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "verified_companies", :force => true do |t|
+    t.string   "name"
+    t.string   "lookup_signature"
+    t.integer  "company_template_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "verified_companies", ["lookup_signature"], :name => "index_verified_companies_on_lookup_signature"
+  add_index "verified_companies", ["name"], :name => "index_verified_companies_on_name", :unique => true
 
 end

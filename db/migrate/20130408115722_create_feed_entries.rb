@@ -7,6 +7,7 @@ class CreateFeedEntries < ActiveRecord::Migration
       t.text :description
       t.boolean :is_enriched , :default => false
       t.references :feed_url
+      t.text :calais_data
       t.timestamps
     end
   end

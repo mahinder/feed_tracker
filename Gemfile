@@ -5,7 +5,7 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'annotate', '2.4.1.beta1'
-gem 'mysql2'
+gem 'pg'
 gem 'devise'
 gem 'rails_admin'
 gem "therubyracer"
@@ -15,6 +15,8 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem "debugger",:group => [:development, :test]
 gem 'rufus-scheduler'
 gem 'feedzirra'
+gem 'calais' , :tag => "v0.0.11"
+gem 'consistent_company', :git => 'git://github.com/vibhor86/consistent_company.git'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
