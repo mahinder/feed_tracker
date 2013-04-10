@@ -2,7 +2,6 @@ require 'rubygems'
 require 'rufus/scheduler'
 require 'feedzirra'
 require 'calais'
-require 'ruby-debug'
 scheduler = Rufus::Scheduler.start_new
 scheduler.cron '03 15 * * 1-7' do  
   feed_urls = FeedUrl.all
