@@ -16,6 +16,7 @@ gem "debugger",:group => [:development, :test]
 gem 'rufus-scheduler'
 gem 'feedzirra'
 gem 'calais' , :tag => "v0.0.11"
+gem "fast-stemmer"
 gem 'consistent_company', :git => 'git://github.com/vibhor86/consistent_company.git'
 # Gems used only for assets and not required
 # in production environments by default.

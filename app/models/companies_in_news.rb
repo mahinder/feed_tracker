@@ -14,5 +14,5 @@ class CompaniesInNews < ActiveRecord::Base
     else
       return nil
     end
-  end
+  end 
 end

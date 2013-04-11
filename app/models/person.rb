@@ -7,7 +7,9 @@ class Person < ActiveRecord::Base
   def full_name
     "#{self.first_name} #{self.last_name}".titlecase
   end
-  
+  def self.data
+    puts "asdsdsds"
+  end
   def previous_company_name
     self.previous_company ? self.previous_company.name : ''
   end

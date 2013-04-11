@@ -2,7 +2,7 @@ class IndustriesInNews < ActiveRecord::Base
   belongs_to :feed_entry
   belongs_to :industry
   validates :news_id,:industry_id , :presence => true
-  validates :industry_id,:scope=>[:feed_entry_id] ,:uniqueness => true
+  validates :industry_id,:uniqueness => {:scope=> :feed_entry_id}
   
   def self.create_industry_tag news_id, name
     unless name.nil?
