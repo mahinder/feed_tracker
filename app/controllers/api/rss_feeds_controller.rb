@@ -15,7 +15,7 @@ module Api
           next
         end
       end   
-      render :json => {status: "ok" }
+      render :json => {status: "200 ok" }
     end 
 
     private

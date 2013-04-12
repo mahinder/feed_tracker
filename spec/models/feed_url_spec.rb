@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe FeedUrl do
   before(:each) do
-    attr = {
+    @attr = {
       :feed_url  => "http://news.google.co.in/news?pz=1&cf=all&ned=in&hl=en&output=rss"
     }
-    @feed_url = FeedUrl.new(attr) 
+    @feed_url = FeedUrl.new(@attr) 
   end
 
   after(:each) do 
@@ -27,5 +27,13 @@ describe FeedUrl do
     @feed_url.user_id = 1
     @feed_url.user_id.should eql(1)
   end
+  
+  it "should be invalid when two feed url instance with same url and user id" do
+    @feed_url.save
+    @feed_url1 = FeedUrl.new(@attr)
+    @feed_url1.should_not be_valid
+   end
+  
+  
   
 end
