@@ -1,0 +1,31 @@
+<% total_by_creation_date = 0 %>
+<% total_by_publish_date = 0 %>
+
+<div class="date">On Date: <%= day %></div>
+<hr/>
+<table>
+  <tbody>
+    <tr>
+      <th>News Source</th>
+      <th class="news-count">News by creation date</th>
+      <th class="news-count">News by publish date</th>
+    </tr>
+    <% all_sources_count.each do |each_day_news_items| %>
+      <% news_count_by_creation_date = each_day_news_items[:news_count_by_creation_date] %>
+      <% news_count_by_publish_date = each_day_news_items[:news_count_by_publish_date] %>
+      <% source_name = each_day_news_items[:source_name] %>
+      <tr>
+        <td><%= source_name %></td>
+        <td class="news-count"><%= news_count_by_creation_date %></td>
+        <td class="news-count"><%= news_count_by_publish_date %></td>
+      </tr>
+      <% total_by_creation_date += news_count_by_creation_date %>
+      <% total_by_publish_date += news_count_by_publish_date %>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+
+<div class="show-total"><strong>Total number of news by creation date: <%= total_by_creation_date %></strong></div>
+<div class="show-total"><strong>Total number of news by publish date: <%= total_by_publish_date %></strong></div>
+

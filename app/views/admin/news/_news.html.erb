@@ -1,0 +1,51 @@
+<% @news = news %>
+<% @companies = @news.companies %>
+<% company_count = @companies.count %>
+<% @people = @news.people %>
+<% source= @news.news_source %>
+
+<tbody id="news-<%= news.id %>">
+<tr class="first last" style="<%= bg_style(news) -%>">
+  <div class="news-block">
+    <td>
+      <%= DateTime.parse("#{news.published_at}").strftime('%d/%m/%y') -%>
+    </td>
+    <td>
+      <%= @companies.collect { |c| c.name }.join(', ') -%>
+    </td>
+    <td>
+      <%= source.name if source.present? -%>
+    </td>
+    <td>
+      <%= select_tag :news_type_select, options_for_select(news_type_options, :selected => @news.news_type_id),
+                     :onchange => "updateNewsType('#{@news.id}', this.value);", :id => "news-type-select-#{@news.id}" -%>
+    </td>
+    <td>
+      <%= render :partial => 'news_link', :locals => { :news => news, :short_headline => true } %>
+    </td>
+    <td>
+      <%= radio_button_tag "state-#{news.id}", 'ready', news.ready, :onclick => "changeNewsState(#{news.id}, 'ready')" %>
+      Ready
+      <%= radio_button_tag "state-#{news.id}", 'block', news.blocked, :onclick => "changeNewsState(#{news.id}, 'block')" %>
+      Block
+    </td>
+    <td><%= link_to 'Edit', "javascript:;", :onclick => "editNewsPanel(#{news.id}, #{company_count});" %></td>
+    <td><%= link_to 'Destroy', "javascript:;", :onclick => "deleteNews(#{news.id});" %></td>
+  </div>
+</tr>
+<tr>
+  <td colspan="8">
+    <div id="<%= news.id %>" style="width:100%;display:none" class="edit-news-block">
+      <%= render :partial => "edit_news", :locals => {:company_count => company_count, :news => @news, :url => admin_news_path(@news), :method => :put} %>
+    </div>
+    <hr/>
+  </td>
+</tr>
+<% if processing?(news_id = news.id) %>
+    <script type="text/javascript">
+        news_id = <%= news_id %>;
+        lockedNewsIds.push(news_id);
+        blockRow(news_id);
+    </script>
+<% end %>
+</tbody>

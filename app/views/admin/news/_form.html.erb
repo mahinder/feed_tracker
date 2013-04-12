@@ -1,0 +1,30 @@
+<h2>News</h2>
+<%= @errors.each{|error| error.message} unless @errors.nil? %>
+<% semantic_form_for @news,:url=>url,:method=>method do |f| %>
+  <div style ="padding-left:20px;width:900px;overflow: inherit">
+    <%f.inputs do %>
+      <%=f.input :url, :required=>false, :input_html => { :size => 50 }%>
+      <%=f.input :headline, :input_html => { :size => 50 }%>
+      <%= f.input :news_source %>
+      <%=f.input :published_at, :as=>:string, :input_html => { :size => 50 }%>      
+      <%=f.input :news_type, :as=>:select %>
+      <%if @news.id%>
+      <%= render :partial=>'news_link', :locals=>{:news => @news} %>
+        <div class="side-by-side clearfix" style="width:600px;z-index: 200">
+          <%=f.input :industries, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
+          <%=f.input :locations, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
+          <%=f.input :job_titles, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
+          <%=f.input :job_functions, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
+        </div>
+        <%=f.input :ready,:as=>:boolean,:required=>false%><br/>
+        <%=f.input :blocked, :as=>:boolean,:required=>false%>
+      <%end%>
+    <%end%>
+    <% f.buttons do %>
+      <%= f.commit_button :label => "Save" %>
+      <%= f.commit_button :label => "Save and Next" if @news.id %>
+    <% end %>
+
+  </div>
+<%end%>
+<%= render :partial=>'layouts/chosen_javascript' %>

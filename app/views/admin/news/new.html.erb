@@ -1,0 +1,10 @@
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+      <div id="RHS_col_admin_regular" style="height:1200px">
+        <%=  render :partial => "form", :locals=>{:url=>admin_news_index_path(@news),:method=>:post}%>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<hr/>
+<table class="table table-bordered news-type-data" style="padding:0">
+  <tbody>
+  <tr>
+    <th>News Type</th>
+    <th>No of news</th>
+    <th>No of companies</th>
+    <th>Interested users for news type</th>
+  </tr>
+
+  <% news_type_data.each do |news_type| %>
+      <tr>
+        <td><%= news_type.name %></td>
+        <td><%= news_type.news_count %></td>
+        <td><%= news_type.companies_count %></td>
+        <td><%= news_type.interested_users_count %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr/>

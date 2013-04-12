@@ -1,0 +1,63 @@
+<div style="padding-top:10px"/>
+	<div id="news-companies-<%= @news.id %>" class="news-companies">
+		<h3>Companies in news</h3>
+		<div style="padding-left:20px">
+			<ul id ="companies-<%= @news.id %>">
+				<% @companies.each do |company| %>
+					<%= render :partial => 'company', :locals => { :company => company, :news_id => @news.id }%>
+				<% end %>
+			</ul>
+
+			<% form_remote_tag :url=> add_company_admin_news_path do %>
+			<span class="wrap">
+				<div style="padding:10px; font-size:14px;" >
+					<table class="add-companies">
+						<tr>
+							<td>Name: <%= render :partial=>"/layouts/company_name_input_for_new_and_update", :locals => {:value=>'', :id => "check-news-#{@news.id}", :size => 26}%></td>
+							<td><%= image_submit_tag 'add_icon.png' -%></td>
+						</tr>
+					</table>
+				</div> </span>
+			<%=hidden_field_tag 'news_id',@news.id%>
+			<%end-%>
+			<div id="message_small_red_companies_<%= @news.id %>"></div>
+		</div>
+	</div>
+
+	<div id="news-people">
+		<h3>People in news</h3>
+		<div style="padding-left:20px">
+			<ul id ="people-<%=@news.id%>">
+				<% @people.each do |person| %>
+					<%= render :partial => 'person', :locals => { :person => person, :news_id => @news.id }%>
+				<% end %>
+			</ul>
+
+			<% form_remote_tag :url=>add_person_admin_news_path do %>
+				<span class="wrap">
+					<div style="font-size:12px;" >
+						<table class="add-people">
+							<tbody>
+								<tr>
+									<td><%= text_field_tag "first_name_#{@news.id}", '', :placeholder => 'First Name', :size => 10 -%></td>
+									<td><%= text_field_tag "last_name_#{@news.id}", '', :placeholder => 'Last Name', :size => 10 -%></td>
+									<td><%= text_field_tag "company_#{@news.id}", '', :placeholder => 'Current company', :size => 14 -%></td>
+									<td><%= text_field_tag 'title', '', :placeholder => 'Current designation', :size => 14 -%></td>
+									<td><%= text_field_tag "last_company_#{@news.id}", '', :placeholder => 'Last company', :size => 14 -%></td>
+									<td><%= text_field_tag 'last_title', '', :placeholder => 'Last designation', :size => 14 -%></td>
+									<td><%= image_submit_tag 'add_icon.png' -%></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</span>
+				<%= hidden_field_tag 'news_id',@news.id %>
+			<%end-%>
+			<div id="message_small_red_people_<%= @news.id %>"></div>
+		</div>
+	</div>
+</div>
+
+<% ["check-news-#{@news.id}", "company_#{@news.id}", "last_company_#{@news.id}"].each do |textfield_id| %>
+	<%= render :partial => "/layouts/js_autocomplete_for_new_and_update_forms", :locals => { :textfield_id => textfield_id } %>
+<% end %>

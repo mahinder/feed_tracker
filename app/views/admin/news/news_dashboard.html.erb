@@ -1,0 +1,64 @@
+<%= stylesheet_link_tag '/lib/bootstrap/css/bootstrap' %>
+<%= javascript_include_tag '/lib/bootstrap/js/bootstrap.min.js' %>
+
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu" %>
+      <div class="news-audit">
+        <h2>News Audits</h2><br/>
+
+        <div class="audit-controls">
+          <div class="audit-label">Please select your time duration to check news summary:</div>
+          <br/>
+          <% form_tag('') do -%>
+            <ul>
+              <li>
+                <span>from</span>
+                <%= text_field_tag :from, nil, :class => 'pull-left' %>
+                &nbsp
+                <span>to</span>
+                <%= text_field_tag :to, nil, :class => 'pull-left' %>
+                <%= submit_tag "Check news", :disable_with => "Please wait..." %></li>
+            </ul>
+          <% end -%>
+          <br/>
+
+          <% if flash[:notice] -%>
+            <div id="notice"><%= flash[:notice] %></div>
+          <% end -%>
+        </div>
+
+        <% if @days.present? %>
+          <div class="audit-body">
+            <div class="span2">
+              <ul class="nav nav-list">
+                <li class="nav-header">Select a date</li>
+                <% @days.each do |day| %>
+                  <li class="btn" id="select-date-<%= day %>" onclick="checkNewsData($(this).text());"><%= day %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div id="notice" class="span10">Please select particular date from left panel to check news details</div>
+            <div class="progress progress-striped active hide" id="progress_div" style="margin-top: 2.5%;">
+              <div class="bar" style="width:100%"></div>
+            </div>
+            <div class='data-area'>
+              <div class="span8">
+                <div id="news-source-data" class="data"></div>
+              </div>
+              <div class="span4">
+                <div id="interesting-news-data" class="data"></div>
+                <div id="alert-send-data" class="data"></div>
+              </div>
+              <div class="span12 pull-right">
+                <div id="news-type-data" class="data"></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

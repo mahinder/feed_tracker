@@ -1,0 +1,33 @@
+<%= @errors.each { |error| error.message } unless @errors.nil? %>
+<% semantic_form_remote_for news, :url => url, :method => method, :before => "hideEditNewsPanel($(this), #{news.id})" do |f| %>
+    <div style="padding-left:20px;overflow: inherit" class="update-tagging">
+      <% f.inputs do %>
+          <% if news.id %>
+              <%= f.input :industries, :as => :select, :placeholder => 'Select Industries', :required => false,
+                          :input_html => {:id => "ind_#{news.id}", :class => "chzn-select",
+                                          :style => "width:300%;margin:2px", :size => 8} %>
+              <%= f.input :locations, :as => :select, :placeholder => 'Select Locations', :required => false,
+                          :input_html => {:id => "loc_#{news.id}", :class => "chzn-select",
+                                          :style => "width:300%;margin:2px", :size => 8} %>
+              <%= f.input :job_titles, :as => :select, :placeholder => 'Select Job Titles', :required => false,
+                          :input_html => {:id => "jtitle_#{news.id}", :class => "chzn-select",
+                                          :style => "width:300%;margin:2px", :size => 8} %>
+              <%= f.input :job_functions, :as => :select, :placeholder => 'Select Job Functions', :required => false,
+                          :input_html => {:id => "jfn_#{news.id}", :class => "chzn-select",
+                                          :style => "width:300%;margin:2px", :size => 8} %>
+          <% end %>
+      <% end %>
+      <div id="more-<%= news.id %>" style="display:none" class="more-details">
+        <%= f.input :url, :required => false, :input_html => {:size => 50} %>
+        <%= f.input :headline, :required => true, :input_html => {:size => 50} %>
+        <%= f.input :published_at, :as => :string, :input_html => {:size => 100, :style => 'width:72%'} %>
+      </div>
+      <% f.buttons :style => 'width:100%' do %>
+          <%= f.commit_button :label => "Save Changes" %>
+      <% end %>
+    </div>
+<% end %>
+<b><%= link_to 'Show More', "javascript:;", :onclick => "toggleExpandedView(#{news.id}, #{company_count})", :id => "expand-view-#{news.id}", :class => "expand-view" %></b>
+<%= render :partial => "news_enrichment" %>
+<%= render :partial => 'layouts/chosen_javascript' %>
+
