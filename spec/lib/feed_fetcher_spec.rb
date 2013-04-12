@@ -1,11 +1,11 @@
-require 'spec_helper'
-
+require_relative '../spec_helper'
 
 describe FeedFetcher do
   
   before(:each) do
     FeedUrl.create(:feed_url => "http://news.google.co.in/news?pz=1&cf=all&ned=in&hl=en&output=rss")
   end
+
   after(:each) do 
     FeedUrl.delete_all
   end 

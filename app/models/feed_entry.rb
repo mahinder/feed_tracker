@@ -5,8 +5,8 @@ class FeedEntry < ActiveRecord::Base
   has_many :companies_in_news, :dependent => :destroy, :class_name => 'CompaniesInNews'
   has_many :companies, :through => :companies_in_news
   has_many :people, :through => :people_in_news
-  validates :headline, :feed_url , :presence => true 
+  validates :headline, :feed_url_id , :presence => true 
   has_many :industries_in_news, :dependent => :destroy, :class_name => 'IndustriesInNews'
   has_many :industries, :through => :industries_in_news
- scope :pending_enrichment, :conditions => {:is_enriched => false}
+  scope :pending_enrichment, :conditions => {:is_enriched => false}
 end

@@ -44,6 +44,10 @@ describe ApiKey do
     duplicate.should_not be_valid
   end
   
+  it "should responde to user" do
+   apikey =  ApiKey.new(@attr)
+   apikey.should respond_to(:user) 
+  end
   
   
 end

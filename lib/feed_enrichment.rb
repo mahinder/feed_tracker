@@ -2,7 +2,7 @@ require 'rubygems'
 require 'calais'
 class FeedEnrichment 
   @calais_key = 'jwua5bvnh7w2m3ks3uzsy9gy'
-  def self.feed_enrichment
+  def feed_enrichment
     news_list ||= FeedEntry.pending_enrichment || []
     news_list.each do |news|
       response_raw = Calais.enlighten(:content => "#{news.headline}\n#{news.description}",:content_type => :html,:license_id => @calais_key )
@@ -26,6 +26,7 @@ class FeedEnrichment
       counter += 1
       #Open calais allows only 4 transactions per second. So, we'll put a worst case delay.
       sleep(1.0/4.0)
-    end
+    end if news_list
   end
+    
 end

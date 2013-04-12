@@ -10,6 +10,17 @@ FeedTracker::Application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :news do
+      collection do 
+        get  :news_data , :update_news_type , :news_dashboard ,:toggle_state ,  :unlock_news , :lock_news , :hide_destroyed_news , :export
+        post :upload, :add_company , :add_person , :news_dashboard
+        delete :remove_company , :remove_person 
+      end
+    end
+  end
+  
+  
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :users
