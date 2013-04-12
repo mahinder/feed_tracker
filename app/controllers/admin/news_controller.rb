@@ -7,8 +7,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def index
-#    @news = News.paginate :all, :conditions => conditions.compile, :include => [:news_source, :companies],
-#      :order => news_sort_order, :page => params[:page], :per_page => 100
+@news = FeedUrl.all
 #
 #    @initial_news_ids = @news.collect { |news| news.id }
 #    NewsType.all.collect { |n| @news_type_options << [n.name, n.id] }
