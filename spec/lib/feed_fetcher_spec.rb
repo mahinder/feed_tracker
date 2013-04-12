@@ -28,8 +28,6 @@ describe FeedFetcher do
       count = FeedEntry.all.count
       count.should eql(0)
     end
-    
-    
   end
   
   
