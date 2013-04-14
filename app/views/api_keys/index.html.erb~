@@ -4,7 +4,7 @@
     <div class="field row ">
 	<div class= "span6">
 		<% if flash[:error] %>
-    			<p id="error" style="  margin-top: 10px; background: red; padding: 10px;" ><%= flash[:error] %></p> 
+    			<p id="error" ><%= flash[:error] %></p> 
 		<% end %>		
 	</div>
 

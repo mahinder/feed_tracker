@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
     rescue_from CanCan::AccessDenied do |exception|
-      redirect_to root_url, :alert => exception.message
+      redirect_to main_app.root_path, :flash => { :error => exception.message } 
     end
    def protect_admin_access
     if user_signed_in?
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
         redirect_to index_path
       end  
     else
-      redirect_to :controller => '/api_keys', :action => 'index'
+      redirect_to root_url
     end
   end   
 end
