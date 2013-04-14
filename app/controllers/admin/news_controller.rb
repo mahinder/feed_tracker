@@ -1,6 +1,6 @@
 class Admin::NewsController < ApplicationController
-  before_filter :protect_admin_access
-  load_and_authorize_resource
+  #before_filter :protect_admin_access
+  load_and_authorize_resource  :class => "FeedEntry" 
 
   def news_sort_order
     "id desc"

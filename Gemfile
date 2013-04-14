@@ -7,7 +7,7 @@ gem 'rails', '3.2.11'
 gem 'annotate', '2.4.1.beta1'
 gem 'sqlite3'
 gem 'devise'
-gem 'rails_admin'
+#gem 'rails_admin'
 gem "therubyracer"
 gem "less-rails"
 gem 'factory_girl_rails'

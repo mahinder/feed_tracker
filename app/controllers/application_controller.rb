@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
       redirect_to main_app.root_path, :flash => { :error => exception.message } 
     end
    def protect_admin_access
+	
     if user_signed_in?
       if !current_user.is_admin?
-        redirect_to index_path
+        redirect_to root_url
       end  
     else
       redirect_to root_url
