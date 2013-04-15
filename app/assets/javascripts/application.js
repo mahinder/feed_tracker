@@ -14,3 +14,32 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+var toggleDisplay = function (id) {
+    ele = document.getElementById(id);
+    if (ele.style.display == "none") {
+        ele.style.display = "block";
+    }
+    else {
+        ele.style.display = "none";
+    }
+}
+var openPopup = function (url, popup_id, percent) {
+    if (typeof (percent) === 'undefined')
+        percent = 60;
+
+    if (screen) {
+        w = screen.availWidth * percent / 100;
+        h = screen.availHeight * percent / 100;
+    }
+
+    var features = "top=" + (screen.height - h) + ", left=" + (screen.width - w) + ", width=" + w + ", height=" + h + ", scrollbars=1";
+    window.open(url, popup_id, features);
+}
+
+var changeNewsState = function(news_id, new_state) {
+	$.ajax({
+		url : '/admin/news/toggle_state',
+		data : 'id=' + news_id + "&state=" + new_state,
+		type : 'get'
+	});
+}

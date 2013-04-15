@@ -7,8 +7,8 @@ class Admin::NewsController < ApplicationController
   end
 
   def index
-@news = FeedUrl.all
-#
+    @news = FeedEntry.paginate(:page => params[:page],:per_page => 100)
+    
 #    @initial_news_ids = @news.collect { |news| news.id }
 #    NewsType.all.collect { |n| @news_type_options << [n.name, n.id] }
 #    session[:last_updated_at] = @news.max_by(&:updated_at).updated_at if @news.present?
@@ -216,7 +216,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def toggle_state
-    news = News.find params[:id]
+    news = FeedEntry.find params[:id]
     if news.ready && params[:state] == 'block' || news.blocked && params[:state] == 'ready' || !news.blocked && !news.ready
       news.blocked = (params[:state] == 'block')
       news.ready = !news.blocked

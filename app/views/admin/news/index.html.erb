@@ -9,13 +9,13 @@
     <div id="mainContent" class="clearfix">
       <div id="RHS_col_admin_general">
         <h1>News</h1>
-        <h3><%= "Last news delivery ran at #{@last_email_delivery_at}"-%></h3>
+        <h3><%#= "Last news delivery ran at #{@last_email_delivery_at}"-%></h3>
          <div style="text-align: center;" id="error"></div>
         <table style="width:100%">
           <tr>
             <td><h2>Companies in news</h2></td>
             <td style="text-align: right;padding-right: 27px">
-              <a href="/admin/news/new" id="add-news">Add News</a>
+              <%#*<a href="/admin/news/new" id="add-news">Add News</a>%>
             </td>
           </tr>
         </table>
@@ -28,32 +28,15 @@
               <th>News Type</th>
               <th>Headline</th>
               <th style="width:94px">State</th>
-              <th>Edit</th>
-              <th>Destroy</th>
-            </tr>
+           </tr>
           </thead>
           <tbody>
             <%= render :partial => "news", :collection => @news ,:as => :news, :locals => { :max => @news.length, :news_type_options => @news_type_options }%>
           </tbody>
         </table>
         <div style="width:80%;float:left;"><%= will_paginate news %></div>
-        <a href="/admin/news/export" title="Download list of all non linksv news with ready state since last week" style="float: right;margin-right: 25px;">Export Non Linksv News</a>
+        <%#*<a href="/admin/news/export" title="Download list of all non linksv news with ready state since last week" style="float: right;margin-right: 25px;">Export Non Linksv News</a>%>
       </div>
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  initialNewsIds = <%= @initial_news_ids.to_json %>;
-
-  $(document).ready(function() {
-    setInterval(function() {
-      lockNews();
-      unlockNews();
-      hideDeletedNews();
-    }, 3000);
-
-    buttonControls();
-    setInterval(function() { alert('Do you want to continue?'); }, 1800000);
-  });
-</script>

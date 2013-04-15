@@ -5,7 +5,8 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'annotate', '2.4.1.beta1'
-gem 'sqlite3'
+#gem 'sqlite3'
+gem 'pg'
 gem 'devise'
 #gem 'rails_admin'
 gem "therubyracer"
@@ -19,6 +20,8 @@ gem 'calais' , :tag => "v0.0.11"
 gem "fast-stemmer"
 gem 'consistent_company', :git => 'git://github.com/vibhor86/consistent_company.git'
 gem "cancan"
+gem "smart_tuple"
+gem 'will_paginate', '~> 3.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

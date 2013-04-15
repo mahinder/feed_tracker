@@ -10,5 +10,8 @@ class CreateFeedEntries < ActiveRecord::Migration
       t.text :calais_data
       t.timestamps
     end
+     add_column :feed_entries, :blocked, :boolean, :default=>false
+     add_column :feed_entries, :ready, :boolean, :default=>false
   end
+  
 end

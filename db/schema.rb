@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.text     "calais_data"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.boolean  "blocked",      :default => false
+    t.boolean  "ready",        :default => false
   end
 
   create_table "feed_urls", :force => true do |t|
@@ -99,7 +101,7 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
