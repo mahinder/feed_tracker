@@ -5,7 +5,6 @@ module Api
     skip_before_filter :authenticate_user!
     before_filter :restrict_access
     respond_to :json
-    require 'ruby-debug'
     
     def create_bulk_rss_feeds 
       params[:feeds].each do |feed|
