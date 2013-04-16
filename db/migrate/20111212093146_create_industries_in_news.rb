@@ -1,7 +1,7 @@
 class CreateIndustriesInNews < ActiveRecord::Migration
   def self.up
     create_table :industries_in_news do |t|
-      t.integer :feed_entry_id
+      t.integer :news_id
       t.integer :industry_id
     end
   end

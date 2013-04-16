@@ -1,18 +1,25 @@
 class Admin::NewsController < ApplicationController
   #before_filter :protect_admin_access
-  load_and_authorize_resource  :class => "FeedEntry" 
+  load_and_authorize_resource
 
   def news_sort_order
     "id desc"
   end
 
   def index
-    @news = FeedEntry.paginate(:page => params[:page],:per_page => 100)
-    
-#    @initial_news_ids = @news.collect { |news| news.id }
-#    NewsType.all.collect { |n| @news_type_options << [n.name, n.id] }
-#    session[:last_updated_at] = @news.max_by(&:updated_at).updated_at if @news.present?
-#    session[:last_locked_at] = Time.now
+    search = params[:search]
+    @news_type_options = [['- Select News Type -', nil]]
+    conditions = SmartTuple.new(" AND ")
+    conditions << ((search.nil? or search.strip.blank?) ? ["news.updated_at > ?", 1.month.ago] :
+        ["news.updated_at > ? and headline like ?", 1.month.ago, "%#{search}%"])
+
+    @news = News.paginate  :conditions => conditions.compile, :include => [:companies],
+      :order => news_sort_order, :page => params[:page], :per_page => 100
+
+    @initial_news_ids = @news.collect { |news| news.id }
+    NewsType.all.collect { |n| @news_type_options << [n.name, n.id] }
+    session[:last_updated_at] = @news.max_by(&:updated_at).updated_at if @news.present?
+    session[:last_locked_at] = Time.now
 
     respond_to do |format|
       format.html # index.html.erb

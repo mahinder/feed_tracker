@@ -16,6 +16,7 @@ class News < ActiveRecord::Base
   has_many :job_functions, :through => :job_functions_in_news
   has_many :interesting_news, :dependent => :destroy, :class_name => "InterestingNews"
   belongs_to :news_type
+  belongs_to :user
   scope :pending_enrichment, :conditions => {:is_enriched => false}
 
   def clear_tags

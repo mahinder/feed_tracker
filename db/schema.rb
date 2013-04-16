@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131031062317) do
+ActiveRecord::Schema.define(:version => 20131105081734) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -35,14 +35,25 @@ ActiveRecord::Schema.define(:version => 20131031062317) do
     t.integer  "country_id",                          :default => 1
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
+    t.integer  "domain_id"
+    t.string   "lookup_signature"
     t.integer  "verified_company_id"
+    t.string   "display_name"
   end
 
+  add_index "companies", ["lookup_signature"], :name => "ix_cmp_lookup_sign"
   add_index "companies", ["verified_company_id"], :name => "ix_comp_verified_comp_id"
 
   create_table "companies_in_news", :force => true do |t|
-    t.integer "feed_entry_id"
+    t.integer "news_id"
     t.integer "company_id"
+    t.integer "relevance",  :default => 0
+  end
+
+  create_table "domains", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "industries", :force => true do |t|
@@ -52,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20131031062317) do
   add_index "industries", ["name"], :name => "index_industries_on_name"
 
   create_table "industries_in_news", :force => true do |t|
-    t.integer "feed_entry_id"
+    t.integer "news_id"
     t.integer "industry_id"
   end
 
@@ -152,8 +163,10 @@ ActiveRecord::Schema.define(:version => 20131031062317) do
     t.integer  "company_template_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "domain_id"
   end
 
+  add_index "verified_companies", ["domain_id"], :name => "index_verified_companies_on_domain_id"
   add_index "verified_companies", ["lookup_signature"], :name => "index_verified_companies_on_lookup_signature"
   add_index "verified_companies", ["name"], :name => "index_verified_companies_on_name", :unique => true
 
