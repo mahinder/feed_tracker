@@ -26,7 +26,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_one :api_key  
-  has_many :feed_urls
+  has_many :news
+  has_many :news_feeds
   #validates_presence_of :user_name
   validates :user_name, :presence => true, :uniqueness => true
   # Setup accessible (or protected) attributes for your model

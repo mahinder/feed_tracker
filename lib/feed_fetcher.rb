@@ -1,20 +1,27 @@
 require 'rubygems'
 require 'feedzirra'
+require 'ruby-debug'
 class FeedFetcher
   
   def fetch_feed
-    FeedUrl.all.each do |feed_url_obj|
-      feed = Feedzirra::Feed.fetch_and_parse(feed_url_obj.feed_url) 
+    NewsFeed.all.each do |news_feed|
+      default_industries = news_feed.news_feed_default_industries
+      default_locations = news_feed.news_feed_default_locations
+      feed = Feedzirra::Feed.fetch_and_parse(news_feed.feed_url)
       feed.entries.each do |entry|
         title = entry.title
         published_at = entry.published.localtime
-        feed_entry = FeedEntry.new(
+        news = News.new(
+          :user_id => news_feed.user_id,
           :headline=>title,
+          :news_type_id => news_feed.news_type_id,
           :published_at=>published_at,
           :url=> entry.url,
-          :feed_url_id => feed_url_obj.id,
           :description => (entry.content || entry.summary) )
-        feed_entry.save
+        if news.save
+          news.industries_in_news_ids = default_industries.collect{|i| i.industry_id}
+          news.locations_in_news_ids = default_locations.collect{|l| l.location_id}
+        end
       end if feed
     end 
   end

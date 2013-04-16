@@ -1,11 +1,11 @@
 require 'rubygems'
 require 'calais'
-
+require 'ruby-debug'
 class FeedEnrichment 
   
   def feed_enrichment
     @calais_key = 'jwua5bvnh7w2m3ks3uzsy9gy'
-    news_list ||= FeedEntry.pending_enrichment || []
+    news_list ||= News.pending_enrichment || []
     news_list.each do |news|
      begin
       response_raw = Calais.enlighten(:content => "#{news.headline}\n#{news.description}",:content_type => :html,:license_id => @calais_key )

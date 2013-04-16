@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408115722) do
+ActiveRecord::Schema.define(:version => 20131031062317) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -45,27 +45,6 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
     t.integer "company_id"
   end
 
-  create_table "feed_entries", :force => true do |t|
-    t.string   "headline"
-    t.datetime "published_at"
-    t.string   "url"
-    t.text     "description"
-    t.boolean  "is_enriched",  :default => false
-    t.integer  "feed_url_id"
-    t.text     "calais_data"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "blocked",      :default => false
-    t.boolean  "ready",        :default => false
-  end
-
-  create_table "feed_urls", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "feed_url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "industries", :force => true do |t|
     t.string "name"
   end
@@ -75,6 +54,45 @@ ActiveRecord::Schema.define(:version => 20130408115722) do
   create_table "industries_in_news", :force => true do |t|
     t.integer "feed_entry_id"
     t.integer "industry_id"
+  end
+
+  create_table "news", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "headline"
+    t.datetime "published_at"
+    t.string   "url"
+    t.text     "description"
+    t.boolean  "is_enriched",  :default => false
+    t.integer  "news_feed_id"
+    t.string   "reason"
+    t.text     "calais_data"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "blocked",      :default => false
+    t.boolean  "ready",        :default => false
+    t.integer  "news_type_id"
+  end
+
+  create_table "news_feed_default_industries", :force => true do |t|
+    t.integer "news_feed_id"
+    t.integer "industry_id"
+  end
+
+  create_table "news_feed_default_locations", :force => true do |t|
+    t.integer "news_feed_id"
+    t.integer "location_id"
+  end
+
+  create_table "news_feeds", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "news_type_id"
+    t.string   "feed_url"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "news_types", :force => true do |t|
+    t.string "name"
   end
 
   create_table "people", :force => true do |t|

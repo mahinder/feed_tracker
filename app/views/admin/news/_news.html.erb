@@ -12,7 +12,6 @@
     </td>
     <td>
       <%= @companies.collect { |c| c.name }.join(', ') -%>
-      
     </td>
     <td>
       <%= source.user_name if source.present? -%>

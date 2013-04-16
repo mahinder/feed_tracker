@@ -9,7 +9,7 @@ module Api
     def create_bulk_rss_feeds 
       params[:feeds].each do |feed|
         begin
-          FeedUrl.create!(:user_id => @user.id , :feed_url => feed) if feed =~ URI::regexp 
+          NewsFeed.create!(:user_id => @user.id , :feed_url => feed) if feed =~ URI::regexp 
         rescue
           next
         end
