@@ -2,6 +2,7 @@ $(document).ready(function() {
   $('#key_genrator').click(function() {
     $.ajax({
       url: "/api_keys",
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       dataType: "json",
       type: "post",
       success: function(data, textStatus, jqXHR) {
@@ -25,6 +26,7 @@ $(document).ready(function() {
     $.ajax({
       url: "/api_keys/"+api_id,
       dataType: "json",
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       type: "put",
       success: function(data, textStatus, jqXHR) {
         if (data.valid) {

@@ -1,7 +1,7 @@
 class PeopleInNews < ActiveRecord::Base
   validates :person_id, :uniqueness => {:scope => :feed_entry_id}
   belongs_to :person
-  attr_accessible :feed_entry_id , :person_id
+  attr_accessible :news_id , :person_id
   def self.tag_person_in_news news, first_name,last_name,from_company, to_company
     begin
       if from_company.nil? == false

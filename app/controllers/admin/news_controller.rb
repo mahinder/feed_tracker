@@ -1,7 +1,8 @@
 class Admin::NewsController < ApplicationController
   #before_filter :protect_admin_access
   load_and_authorize_resource
-
+  layout "admin"
+require 'ruby-debug'
   def news_sort_order
     "id desc"
   end
@@ -104,10 +105,7 @@ class Admin::NewsController < ApplicationController
   def destroy
     @news = News.find(params[:id])
     @news.destroy
-
-    render :update do |page|
-      page.visual_effect :fade, "tbody#news-#{@news.id}"
-    end
+    render :json => {:news => @news.id }
   end
 
   def add_company
@@ -223,18 +221,15 @@ class Admin::NewsController < ApplicationController
   end
 
   def toggle_state
-    news = FeedEntry.find params[:id]
+    news = News.find params[:id]
     if news.ready && params[:state] == 'block' || news.blocked && params[:state] == 'ready' || !news.blocked && !news.ready
       news.blocked = (params[:state] == 'block')
       news.ready = !news.blocked
       news.save
-
-      render :update do |page|
-        news.on_news_update
-        page << "hideBlockLockRow(#{news.id});"
-      end
+      render :json => {:valid => true , :news => news.id}
+      
     else
-      render :nothing => true
+      render :json => {:valid => false}
     end
   end
 

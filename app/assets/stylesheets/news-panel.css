@@ -1,0 +1,57 @@
+.edit-news-block li.optional, .edit-news-block li.required {
+	width:50%;
+	float:left;
+	list-style: none;
+	margin-top: 0.8em;
+}
+
+.news-companies {
+	display:none;
+}
+
+.add-people tbody tr td, .add-companies tbody tr td {
+	border: none;
+	vertical-align: middle;
+}
+
+form.formtastic .update-tagging fieldset ol li {
+	margin: 0em;
+}
+
+form.formtastic .update-tagging fieldset ol li.commit {
+	margin-left: 15em;
+}
+
+form.formtastic .update-tagging fieldset ol li label {
+	margin-top: 0.5em;
+}
+
+form.formtastic .update-tagging fieldset.buttons {
+	padding-left: 25%;
+	padding-top: 10px;
+}
+
+.more-details li label {
+	float: left;
+	width: 25%;
+}
+
+.more-details li {
+	margin-right: 0.05em;
+}
+
+.more-details li input, .more-details li select {
+	float: left;
+	font-size: 1.2em;
+	width: 72%;
+}
+
+.more-details li select {
+	float: left;
+	font-size: 1.2em;
+	width: 73%;
+}
+
+hr {
+	opacity: 0.5;
+}

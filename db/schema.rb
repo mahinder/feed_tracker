@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20131105081734) do
   end
 
   create_table "people_in_news", :force => true do |t|
-    t.integer "feed_entry_id"
+    t.integer "news_id"
     t.integer "person_id"
   end
 

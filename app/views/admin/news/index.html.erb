@@ -2,7 +2,6 @@
   lockedNewsIds = [];
   if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) alert('WARNING! Mozilla Firebox is not compatible for news editing purpose. Please use Chrome or Chromium.');
 </script>
-
 <% news = @news %>
 <div id="container">
   <div id="content" class="clearfix">
@@ -15,7 +14,7 @@
           <tr>
             <td><h2>Companies in news</h2></td>
             <td style="text-align: right;padding-right: 27px">
-              <%#*<a href="/admin/news/new" id="add-news">Add News</a>%>
+              <a href="/admin/news/new" id="add-news">Add News</a>
             </td>
           </tr>
         </table>
@@ -28,6 +27,8 @@
               <th>News Type</th>
               <th>Headline</th>
               <th style="width:94px">State</th>
+              <th>Edit</th>
+              <th>Destroy</th>
            </tr>
           </thead>
           <tbody>
@@ -35,7 +36,7 @@
           </tbody>
         </table>
         <div style="width:80%;float:left;"><%= will_paginate news %></div>
-        <%#*<a href="/admin/news/export" title="Download list of all non linksv news with ready state since last week" style="float: right;margin-right: 25px;">Export Non Linksv News</a>%>
+        <a href="/admin/news/export" title="Download list of all non linksv news with ready state since last week" style="float: right;margin-right: 25px;">Export Non Linksv News</a>
       </div>
     </div>
   </div>

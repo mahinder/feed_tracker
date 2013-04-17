@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>DealTraction</title>
+    <link rel="shortcut icon" href="/favicon.ico?"/>
+    <%= javascript_include_tag "jquery-1.7.2.min", "jquery-ui-min", "jrails", "application", 'jquery.gritter.min' %>
+    <%= stylesheet_link_tag 'main' , 'jquery-ui/jquery-ui', 'jquery.gritter', 'jquery-ui/themes/start/jquery-ui-1.8.22.custom.css' %>
+    <%= javascript_include_tag "jquery.blockUI", "news-panel" %>
+    <%= stylesheet_link_tag 'news-panel', 'news-audit' %>
+    <%= formtastic_stylesheet_link_tag %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="in_ff in_windows" id="homePage">
+    <center>
+      <div id="wrapper">
+        <%= render :partial => '/layouts/admin_header'%>
+        <%= yield %>
+      </div>
+      <%= render :partial => '/layouts/footer'%>
+    </center>
+  </body>
+</html>

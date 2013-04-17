@@ -7,7 +7,7 @@ class FeedEnrichment
     @calais_key = 'jwua5bvnh7w2m3ks3uzsy9gy'
     news_list ||= News.pending_enrichment || []
     news_list.each do |news|
-      response_raw = Calais.enlighten(:content => "#{news.headline}\n#{news.description}",:content_type => :html,:license_id => @calais_key )
+      response_raw = Calais.enlighten(:content => "#{news.headline}\n#{Sanitize.clean(news.description)}",:content_type => :html,:license_id => @calais_key )
       news.calais_data = response_raw
       response = Calais::Response.new response_raw
       response.entities.each do |entity|

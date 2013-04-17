@@ -1,0 +1,72 @@
+.news-audit {
+    background-color: white;
+    min-height: 400px;
+    width:1174px;
+    text-align:center;
+}
+
+.news-audit h2 {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+}
+
+.audit-controls {
+    text-align: left;
+    padding-left: 15px;
+}
+
+.audit-label {
+    font-size: 16px;
+}
+
+.news-audit input[type=submit] {
+    margin-bottom: 8px;
+    padding: 2px;
+}
+
+.audit-body {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+
+.audit-controls ul li {
+    margin-top:10px;
+}
+
+.audit-controls ul li span {
+    display: block;
+    float: left;
+    padding: 5px;
+}
+
+.audit-body .data {
+    padding-top: 30px;
+}
+
+.audit-body .data table {
+    width: 100%;
+    font-size: 14px;
+    padding-left: 30px;
+    text-align: left
+}
+
+.audit-body .news-type-data {
+    padding-left: 0;
+}
+
+.audit-body .data .news-count {
+    text-align: center;
+}
+
+.audit-body .data .date {
+    padding-top: 10px;
+    font-size: 16px;
+    color: #08C;
+}
+
+.audit-body .data .show-total {
+    padding-left: 30px;
+    font-size:16px
+}

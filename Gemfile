@@ -10,6 +10,8 @@ gem 'pg'
 gem 'devise'
 #gem 'rails_admin'
 gem "therubyracer"
+gem "formtastic", "1.2.4"
+gem 'sanitize'
 gem "less-rails"
 gem 'factory_girl_rails'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
 var toggleDisplay = function (id) {
     ele = document.getElementById(id);
     if (ele.style.display == "none") {
@@ -36,10 +37,20 @@ var openPopup = function (url, popup_id, percent) {
     window.open(url, popup_id, features);
 }
 
-var changeNewsState = function(news_id, new_state) {
-	$.ajax({
-		url : '/admin/news/toggle_state',
-		data : 'id=' + news_id + "&state=" + new_state,
-		type : 'get'
-	});
+
+var updateNewsType = function(newsId, newVal) {
+    var el = $('#news-type-select-' + newsId);
+    $(el).attr('disabled', 'disabled');
+
+    $.ajax({
+        url: '/admin/news/update_news_type',
+        data: 'news_id=' + newsId + '&news_type_id=' + newVal,
+        success: function() {
+            $(el).removeAttr('disabled');
+        },
+        error: function() {
+            $(el).removeAttr('disabled');
+        }
+    })
 }
+
