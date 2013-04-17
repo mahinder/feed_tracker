@@ -2,7 +2,6 @@ class Admin::NewsController < ApplicationController
   #before_filter :protect_admin_access
   load_and_authorize_resource
   layout "admin"
-require 'ruby-debug'
   def news_sort_order
     "id desc"
   end
