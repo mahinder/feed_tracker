@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105081734) do
+ActiveRecord::Schema.define(:version => 20131109102339) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -65,6 +65,33 @@ ActiveRecord::Schema.define(:version => 20131105081734) do
   create_table "industries_in_news", :force => true do |t|
     t.integer "news_id"
     t.integer "industry_id"
+  end
+
+  create_table "job_functions", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "job_functions_in_news", :force => true do |t|
+    t.integer "news_id"
+    t.integer "job_function_id"
+  end
+
+  create_table "job_titles", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "job_titles_in_news", :force => true do |t|
+    t.integer "news_id"
+    t.integer "job_title_id"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "locations_in_news", :force => true do |t|
+    t.integer "news_id"
+    t.integer "location_id"
   end
 
   create_table "news", :force => true do |t|

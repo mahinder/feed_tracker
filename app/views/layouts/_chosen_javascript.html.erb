@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag 'chosen' %>
+<%= javascript_include_tag 'chosen.jquery.min' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".chzn-select").chosen();
+
+    var myValues =  $('#user_li_auto_sync_frequency').val() ;
+    if(myValues == 1)
+      $('#email_contact_sync_options').show();
+    else
+      $('#email_contact_sync_options').hide();
+
+    $('#user_li_auto_sync_frequency').change(function() {
+      if(this.value == 1)
+        $('#email_contact_sync_options').show();
+      else
+        $('#email_contact_sync_options').hide();
+    });
+
+    var intialValues =  $('#user_email_notifications').val() ;
+    if(intialValues == 'true')
+      $('#user_check_email_for_zero_contact_input').show();
+    else
+      $('#user_check_email_for_zero_contact_input').hide();
+
+
+    $('#user_email_notifications').change(function() {
+      if(this.value == 'true')
+        $('#user_check_email_for_zero_contact_input').show();
+      else
+        $('#user_check_email_for_zero_contact_input').hide();
+    });
+
+  });
+</script>

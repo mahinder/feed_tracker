@@ -8,12 +8,12 @@ class News < ActiveRecord::Base
   validates :headline , :presence => true 
   has_many :industries_in_news, :dependent => :destroy, :class_name => 'IndustriesInNews'
   has_many :industries, :through => :industries_in_news
-#  has_many :locations_in_news, :dependent => :destroy, :class_name => 'LocationsInNews'
-#  has_many :locations, :through => :locations_in_news
-#  has_many :job_titles_in_news, :dependent => :destroy, :class_name => 'JobTitlesInNews'
-#  has_many :job_titles, :through => :job_titles_in_news
-#  has_many :job_functions_in_news, :dependent => :destroy, :class_name => 'JobFunctionsInNews'
-#  has_many :job_functions, :through => :job_functions_in_news
+  has_many :locations_in_news, :dependent => :destroy, :class_name => 'LocationsInNews'
+  has_many :locations, :through => :locations_in_news
+  has_many :job_titles_in_news, :dependent => :destroy, :class_name => 'JobTitlesInNews'
+  has_many :job_titles, :through => :job_titles_in_news
+  has_many :job_functions_in_news, :dependent => :destroy, :class_name => 'JobFunctionsInNews'
+  has_many :job_functions, :through => :job_functions_in_news
 #  has_many :interesting_news, :dependent => :destroy, :class_name => "InterestingNews"
   belongs_to :news_type
   belongs_to :user
