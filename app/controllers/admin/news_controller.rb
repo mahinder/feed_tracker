@@ -44,7 +44,7 @@ class Admin::NewsController < ApplicationController
   # GET /news/new.xml
   def new
     @news = News.new
-    @news.news_source = NewsSource.last
+#   @news.news_source = NewsSource.last
     @news.published_at = Time.now
     respond_to do |format|
       format.html # new.html.erb
@@ -245,7 +245,8 @@ class Admin::NewsController < ApplicationController
   end
 
   def lock_news
-    running_jobs = RunningJob.find(:all, :conditions => ['created_at >= ?', session[:last_locked_at]])
+#    running_jobs = RunningJob.find(:all, :conditions => ['created_at >= ?', session[:last_locked_at]])
+    running_jobs = []
     news_ids = running_jobs.collect { |job| job.resource_id }
     session[:last_locked_at] = running_jobs.empty? ? session[:last_locked_at] : running_jobs.sort_by(&:created_at).last.created_at
 

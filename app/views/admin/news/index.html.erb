@@ -2,14 +2,17 @@
   lockedNewsIds = [];
   if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) alert('WARNING! Mozilla Firebox is not compatible for news editing purpose. Please use Chrome or Chromium.');
 </script>
+
 <% news = @news %>
 <div id="container">
   <div id="content" class="clearfix">
     <div id="mainContent" class="clearfix">
+      <%#= render :partial => "/layouts/top_tabs_menu"%>
       <div id="RHS_col_admin_general">
         <h1>News</h1>
-        <h3><%#= "Last news delivery ran at #{@last_email_delivery_at}"-%></h3>
-         <div style="text-align: center;" id="error"></div>
+        <h3><%= "Last news delivery ran at #{@last_email_delivery_at}"-%></h3>
+        <%= render :partial => "layouts/search_box", :locals => { :width => 347 } %>
+        <div style="text-align: center;" id="error"></div>
         <table style="width:100%">
           <tr>
             <td><h2>Companies in news</h2></td>
@@ -29,7 +32,7 @@
               <th style="width:94px">State</th>
               <th>Edit</th>
               <th>Destroy</th>
-           </tr>
+            </tr>
           </thead>
           <tbody>
             <%= render :partial => "news", :collection => @news ,:as => :news, :locals => { :max => @news.length, :news_type_options => @news_type_options }%>

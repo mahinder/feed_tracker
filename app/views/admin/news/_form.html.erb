@@ -1,11 +1,11 @@
 <h2>News</h2>
 <%= @errors.each{|error| error.message} unless @errors.nil? %>
-<% semantic_form_for @news,:url=>url,:method=>method do |f| %>
+<%= semantic_form_for @news,:url=>url,:method=>method do |f| %>
   <div style ="padding-left:20px;width:900px;overflow: inherit">
-    <%f.inputs do %>
+    <%=f.inputs do %>
       <%=f.input :url, :required=>false, :input_html => { :size => 50 }%>
       <%=f.input :headline, :input_html => { :size => 50 }%>
-      <%= f.input :news_source %>
+      <%#=f.input :news_source %>
       <%=f.input :published_at, :as=>:string, :input_html => { :size => 50 }%>      
       <%=f.input :news_type, :as=>:select %>
       <%if @news.id%>
@@ -20,7 +20,7 @@
         <%=f.input :blocked, :as=>:boolean,:required=>false%>
       <%end%>
     <%end%>
-    <% f.buttons do %>
+    <%= f.buttons do %>
       <%= f.commit_button :label => "Save" %>
       <%= f.commit_button :label => "Save and Next" if @news.id %>
     <% end %>

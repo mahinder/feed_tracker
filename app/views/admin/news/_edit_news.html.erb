@@ -1,7 +1,7 @@
 <%= @errors.each { |error| error.message } unless @errors.nil? %>
-<% semantic_form_remote_for news, :url => url, :method => method, :before => "hideEditNewsPanel($(this), #{news.id})" do |f| %>
+<%= semantic_form_remote_for news, :url => url, :method => method, :before => "hideEditNewsPanel($(this), #{news.id})" do |f| %>
     <div style="padding-left:20px;overflow: inherit" class="update-tagging">
-      <% f.inputs do %>
+      <%= f.inputs do %>
           <% if news.id %>
               <%= f.input :industries, :as => :select, :placeholder => 'Select Industries', :required => false,
                           :input_html => {:id => "ind_#{news.id}", :class => "chzn-select",

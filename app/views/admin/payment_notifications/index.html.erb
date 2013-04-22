@@ -1,0 +1,28 @@
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+      <div id="RHS_col_admin">
+        <h1>Payment Notifications</h1>
+        <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+          <thead>
+            <tr class="first last">
+              <th>User Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Transaction id</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>All params</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%=  render :partial => "payment_notification", :collection => @payment_notifications ,:as => :payment_notification, :locals => {:max => @payment_notifications.length }%>
+          </tbody>
+        </table>
+        <%= will_paginate @payment_notifications %>
+      </div>
+    </div>
+  </div>
+</div>
+

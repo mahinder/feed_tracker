@@ -1,0 +1,56 @@
+<div id="container">
+        <div id="content" class="clearfix">
+          <div id="mainContent" class="clearfix">
+            <%= render :partial => "/layouts/top_tabs_menu"%>
+            <div id="RHS_col_admin">
+                <h1>Referrals</h1>
+                <% img_name = "arrow_desc.png"
+                   if params[:so] && params[:so] == 'ASC'
+           		      img_name = "arrow_asc.png"
+         		       end
+                %>
+                 <%= single_success_msg_div({:msg => flash[:success],:style => "margin-left:15px;"}) %>
+                 <div style="float:right;margin-right:20px"><%= link_to "<strong>Export</strong>", export_referrals_admin_home_path, :method => :get %></div>
+                <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+                <col width="25%"/>
+                <col width="25%"/>
+                
+                <col width="25%"/>
+                <col width="25%"/>
+                
+                <thead>
+                  <tr class="first last">
+                    <th ><%= link_to('Referral ', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'referral', :so => (params[:so] && params[:so] == 'ASC') ? 'DESC' : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'referral' %></th>
+                    <th><%= link_to('Referred By', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'referredby', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'referredby') ? 'DESC' : 'ASC')  : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'referredby' %></th>
+                    <th><%= link_to('Reference Date', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'rdate', :so => (params[:so] && params[:so] == 'ASC') ?  ((params[:sf] == 'fdate') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'rdate' %></th>
+                    <th class="last"><%= link_to('Join Date', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'jdate', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'jdate') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'jdate' %></th>
+                    
+                  </tr>
+                      </thead>
+                <tbody>
+              <% if @referrals && !@referrals.empty?%>  
+                <% @referrals.each do |ref |%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                    <td><a href="mailto:<%= ref.referred_to %>"><%= ref.referred_to %></a></td>
+                    <td><a href="mailto:<%= ref.referred_by %>"><%= ref.referred_by %></a></td>
+                    <td><%= pacific_time_instance_timestamp(ref.referral_date) unless ref.referral_date.blank?%></td>
+                    <td class="last">
+                    <%=  pacific_time_instance_timestamp(ref.join_date) unless ref.join_date.blank?%>
+                    </td>
+                  </tr>
+                <% end %>  
+              <% end %>  
+                </tbody>
+              </table>
+                    <br />
+                    <% if @referrals && !@referrals.empty?%>
+                    <%= will_paginate @referrals%>
+                    <% else %>
+                    <br/><br/>
+                    <% end %>
+                    <!-- end #mainContent -->
+                  </div>
+          </div>
+              </div>
+      </div>
+      <% flash.clear%>

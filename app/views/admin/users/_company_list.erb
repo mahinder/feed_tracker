@@ -1,0 +1,42 @@
+<% if @companies && !@companies.empty? %>
+          <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+            <col width="25%"/>
+            <col width="20%"/>
+            <col width="25%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <thead>
+              <tr class="first last">
+                <th>Company</th>
+                <th>Industry</th>
+                <th>City, State</th>
+                <th>Employees</th>
+                <th>Revenues</th>
+                <th class="last">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <% @companies.each do |company|%>
+                
+                <tr class="first last <%= cycle('','odd') %>">
+                  <td><%= company.name %></td>
+                  <td><%= company.industry %></td>
+                  <td><%=  "#{company.city} #{company.state}" %></td>
+                  <td><%= company.employees %></td>
+                  <td><%= company.revenue %></td>
+                  <td class="last">
+                    <%= link_to_remote "U",:url => company_prospect_form_admin_users_path(:cid => company.id), :method => :get %>
+                  </td>
+
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+        <br />
+        <%  if @companies%>
+          <%= will_paginate @companies%>
+        <% end %>

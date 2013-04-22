@@ -1,5 +1,6 @@
 class News < ActiveRecord::Base
   attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data
+  has_many :news_indices, :dependent => :destroy, :class_name => 'NewsIndex'
   belongs_to :news_feeds
   has_many :people_in_news, :dependent => :destroy, :class_name => 'PeopleInNews'
   has_many :companies_in_news, :dependent => :destroy, :class_name => 'CompaniesInNews'
@@ -14,7 +15,7 @@ class News < ActiveRecord::Base
   has_many :job_titles, :through => :job_titles_in_news
   has_many :job_functions_in_news, :dependent => :destroy, :class_name => 'JobFunctionsInNews'
   has_many :job_functions, :through => :job_functions_in_news
-#  has_many :interesting_news, :dependent => :destroy, :class_name => "InterestingNews"
+  has_many :interesting_news, :dependent => :destroy, :class_name => "InterestingNews"
   belongs_to :news_type
   belongs_to :user
   scope :pending_enrichment, :conditions => {:is_enriched => false}

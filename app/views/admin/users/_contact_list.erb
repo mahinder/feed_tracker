@@ -1,0 +1,44 @@
+<% if @contacts && !@contacts.empty? %>
+          <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+            <col width="30%"/>
+            <col width="30%"/>
+            <col width="10%"/>
+            <col width="15%"/>
+            <col width="5%"/>
+            <thead>
+              <tr class="first last">
+                <th> Name</th>
+                <th>Company</th>
+                <th>Network</th>
+                <th>FM Status</th>
+                <th class="last">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <% @contacts.each do |contact|%>
+                <%  top_connector =  contact.top_connector%>
+                <tr class="first last <%= top_connector ? 'top_conectors' : cycle('','odd') %>">
+                  <td><%= contact.name %></td>
+                  <td><%= contact.company.name if contact.company%></td>
+                  <td><%=  image_tag('cross_icon.png')%></td>
+                  <td><%= top_connector ? top_connector_fm_status(top_connector.fm_status) : "Not Started"%></td>
+                  <td class="last">
+                    <% if top_connector %>
+                      <%= link_to(image_tag('trash_icon.png',:align => "absmiddle"), remove_from_top_connectors_fm_contacts_path(:id =>top_connector.id)) %>
+                      <%= link_to_remote "U",:url => contact_prospect_form_admin_users_path(:cid => contact.id), :method => :get %>
+                    <% else  %>
+                      <%= link_to(image_tag('add_icon.png'), add_to_top_connectors_fm_contacts_path(:id =>contact.id)) %>
+                    <% end %>
+                  </td>
+
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+        <br />
+        <%  if @contacts%>
+          <%= will_paginate @contacts, :params => {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search]} %>
+        <% end %>

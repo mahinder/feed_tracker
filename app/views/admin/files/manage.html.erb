@@ -1,0 +1,149 @@
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+
+      <div id="RHS_col_admin">
+        <h1>Admin Dashboard </h1>
+        <% img_name = "arrow_desc.png"
+        if params[:so] && params[:so] == 'ASC'
+          img_name = "arrow_asc.png"
+        end
+      %>
+        <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+          <col width="15%"/>
+          <col width="10%"/>
+          <col width="23%"/>
+          <col width="10%"/>
+          <col width="15%"/>
+          <col width="5%"/>
+          <col width="22%"/>
+          <thead>
+            <tr class="first last">
+              <th ><%= link_to('Name', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'name', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'name') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'name' %></th>
+              <th ><%= link_to('Company', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'company', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'company') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'company' %></th>
+              <th><%= link_to('Email', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'email', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'email') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'email' %></th>
+              <th ><%= link_to('Phone', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'phone', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'phone') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'phone' %></th>
+              <th><%= link_to('Filename', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'filename', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'filename') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'filename' %></th>
+              <th><%= link_to('Request', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'request', :so => (params[:so] && params[:so] == 'ASC') ? ( (params[:sf] == 'request') ? 'DESC' : 'ASC' ) : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'request' %></th>
+              <th class="last">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @user_files && !@user_files.empty? %>
+
+              <% if @listfilewise %>
+                <% @user_files.each do |file|%>
+                  <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                    <% user = file.user %>
+                    <td><%= user.name %></td>
+                    <td><%= user.company_name %></td>
+                    <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                    <td><%= user.phone%></td>
+                    <td><%= link_to truncate(file.trope_file_name,:length => 20), export_admin_files_path(:id=>file.id, :type=>  Constants::FILE_UPLOAD::BCARD), :method => :put, :title => file.note, :alt => file.note, :target => '_blank' %></td>
+                    <td><%= file.file_request_type%></td>
+                    <% if file.status %>
+                      <td class="last red"><strong>Uploaded</strong>
+                      <% else %>
+                      <td class="last"><%= link_to_remote "<strong>Upload</strong>",:url => upload_admin_files_path(:uid => user.id,:attach => file.id,:attachtp => Constants::FILE_UPLOAD::BCARD), :method => :get %>
+                      <% end %>
+                      <span style="color:#999;">|</span>&nbsp;<%= link_to("<strong>Delete</strong>",admin_file_path(:id => file.id,:type => 'bcard'),:method => :delete,:confirm => "Are you sure?")%>
+                    </td>
+                  </tr>
+                <% end %>
+
+              <% else%>
+                <% @user_files.each do |user|%>
+                  <% user.bcards.each do |file|%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                      <td><%= user.name %></td>
+                      <td><%= user.company_name %></td>
+                      <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                      <td><%= user.phone%></td>
+                      <td><%= link_to truncate(file.trope_file_name,:length => 20), export_admin_files_path(:id=>file.id, :type=>  Constants::FILE_UPLOAD::BCARD), :method => :put, :title => file.note, :alt => file.note, :target => '_blank' %></td>
+                      <td><%= file.file_request_type%></td>
+                      <% if file.status %>
+                        <td class="last red"><strong>Uploaded</strong>
+                        <% else %>
+                        <td class="last"><%= link_to_remote "<strong>Upload</strong>",:url => upload_admin_files_path(:uid => user.id,:attach => file.id,:attachtp => Constants::FILE_UPLOAD::BCARD), :method => :get %>
+                        <% end %>
+                        <span style="color:#999;">|</span>&nbsp;<%= link_to("<strong>Delete</strong>",admin_file_path(:id => file.id,:type => 'bcard'),:method => :delete,:confirm => "Are you sure?")%>
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% user.pdf_files.each do |file|%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                      <td><%= user.name %></td>
+                      <td><%= user.company_name %></td>
+                      <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                      <td><%= user.phone%></td>
+                      <td><%= link_to truncate(file.trope_file_name,:length => 20), export_admin_files_path(:id=>file.id, :type=>  Constants::FILE_UPLOAD::PDF), :method => :put,:title => file.note, :alt => file.note, :target => '_blank'%></td>
+                      <td><%= file.file_request_type%></td>
+                      <% if file.status %>
+                        <td class="last red"><strong>Uploaded</strong>
+                        <% else %>
+                        <td class="last"><%= link_to_remote "<strong>Upload</strong>",:url => upload_admin_files_path(:uid => user.id,:attach => file.id,:attachtp => Constants::FILE_UPLOAD::PDF), :method => :get %>
+                        <% end %>
+                        <span style="color:#999;">|</span>&nbsp;<%= link_to("<strong>Delete</strong>",admin_file_path(:id => file.id,:type => 'pdf_file'),:method => :delete,:confirm => "Are you sure?")%>
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% user.misc_files.each do |file|%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                      <td><%= user.name %></td>
+                      <td><%= user.company_name %></td>
+                      <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                      <td><%= user.phone%></td>
+                      <td><%= link_to truncate(file.trope_file_name,:length => 20), export_admin_files_path(:id=>file.id, :type=> Constants::FILE_UPLOAD::OTHER), :method => :put, :title => file.note, :alt => file.note %></td>
+                      <td><%= file.file_request_type%></td>
+                      <% if file.status %>
+                        <td class="last red"><strong>Uploaded</strong>
+                        <% else %>
+                        <td class="last"><%= link_to_remote "<strong>Upload</strong>",:url => upload_admin_files_path(:uid => user.id,:attach => file.id,:attachtp => Constants::FILE_UPLOAD::OTHER), :method => :get %>
+                        <% end %>
+                        <span style="color:#999;">|</span>&nbsp;<%= link_to("<strong>Delete</strong>",admin_file_path(:id => file.id,:type => 'misc_file'),:method => :delete,:confirm => "Are you sure?")%>
+                      </td>
+                    </tr>
+                  <% end %>
+
+                  <% user.csv_files.each do |file|%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                      <td><%= user.name %></td>
+                      <td><%= user.company_name %></td>
+                      <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                      <td><%= user.phone%></td>
+                      <td><%= link_to truncate(file.trope_file_name,:length => 20), export_admin_files_path(:id=>file.id, :type=> Constants::FILE_UPLOAD::CONSTCSV), :method => :put, :title => file.note, :alt => file.note %></td>
+                      <td><%= file.file_request_type%></td>
+                      <% if file.status %>
+                        <td class="last red"><strong>Uploaded</strong>
+                        <% else %>
+                        <td class="last"><%= link_to_remote "<strong>Upload</strong>",:url => upload_admin_files_path(:uid => user.id,:attach => file.id,:attachtp => Constants::FILE_UPLOAD::CONSTCSV), :method => :get %>
+                        <% end %>
+                        <span style="color:#999;">|</span>&nbsp;<%= link_to("<strong>Delete</strong>",admin_file_path(:id => file.id,:type => 'csv_file'),:method => :delete,:confirm => "Are you sure?")%>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+            <% end %>
+          </tbody>
+        </table>
+        <br />
+        <% if @user_files && !@user_files.empty? %>
+          <%= will_paginate @user_files %>
+        <% else%>
+          <br/><br/>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% flash.clear %>
+<div class="popup1_hostory" id="pop_up_box_upload_file_id" style="display:none">
+  <div class="popup_block_history"><img src="/images/icon_close.png"  class="cntrl" border="none" onclick="hidepopuplight('pop_up_box_upload_file_id');"  style="cursor:pointer" title="Close"/>
+    <div style="overflow:hidden;" class="">
+      <div id="upload_file_id"> </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+      <div id="RHS_col_admin">
+        <h1>Upload a prospect company / list for a user</h1>
+
+        <div class="left_padd">
+          <%= single_error_msg_div({:msg => flash[:error],:style => "width:230px;"}) %>
+          <%= single_success_msg_div({:msg => flash[:success]}) %>
+          <% if @user_task %>
+            <script language="javascript">
+              disableAllLinks();
+              new PeriodicalExecuter(function() {new Ajax.Request('/rm/companies/check_append_status?id=<%= @user_task.id %>&loc=admin', {asynchronous:true, evalScripts:true})},20)
+            </script>
+            <h2 id="initialized_data_append_process">Data Enrichment in Progress...please wait</h2><br />
+            <div style="text-align:center"><%= image_tag('loader.gif',:style => "height:100pz;width:100px;")%></div>
+          <% else %>
+            <% form_tag '',  :multipart => true do  %>
+              <div id="form_div">
+                <ul>
+                  <li>User: <br /><span class="wrap1">
+                      <!--
+                      < %= text_field_with_auto_complete :user, :name, {:class => "inputbox"},{:skip_style => true,:select => "to_be_selected",:after_update_element => "function(txt,li){document.getElementById('company_user_id_selector').value = li.value;}"}%>
+                      -->
+                      <%= select(:user, :id, User.find(:all, :conditions => ["role_id != 1"], :order => "first_name ASC").collect {|u| (u.name.strip.blank?) ? [ u.email, u.id ] : [ "#{u.name.titleize} - <#{u.email}>", u.id ] },
+                        { :include_blank => false, :prompt => "Select User" },
+                        {:class => "user_select_box"})%>
+                    </span>
+                  </li>
+                </ul>
+
+                <ul>
+                  <li>User's Password: &nbsp; <br /><span class="wrap1">
+                      <%= password_field_tag :user_secret,'',:class => "inputbox",:style=> "width:260px"%>
+                    </span>
+                  </li>
+                </ul>
+
+                <ul>
+                  <li>File:<br /><span class="wrap1">
+                      <!--input id="company_user_id_selector" name="company_user_id_selector" type="hidden"/-->
+                      <%= file_field_tag 'file',:class => "inputbox",:size => "25"%>
+                    </span>	 </li>
+                </ul>
+                <!--ul>
+                  <li style="width:18px; margin-top:3px">
+    <%#= check_box_tag 'is_completed' %>
+                  </li>
+                  <li> Completed</li>
+                </ul-->
+
+                <ul>
+                  <li class="top_space1"><%= image_submit_tag('submit_btn.png') %></li>
+                </ul>
+              </div>
+              <br />
+            <% end %>
+          <% end %>
+          <% flash.clear%>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup1_hostory" id="pop_up_box_upload_file_id" style="display:none">
+  <div class="popup_block_history"><img src="/images/icon_close.png"  class="cntrl" border="none" onclick="hidepopuplight('pop_up_box_upload_file_id');"  style="cursor:pointer" title="Close"/>
+    <div style="overflow:hidden;" class="">
+      <div id="upload_file_id"> </div>
+    </div>
+  </div>
+</div>

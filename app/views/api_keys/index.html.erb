@@ -1,41 +1,39 @@
-<div class="row" >
-
-  <div class="span9">
-    <div class="field row ">
-      <div class= "span6">
-        <% if flash[:error] %>
-          <p id="error" style="  margin-top: 10px; background: red; padding: 10px;" ><%= flash[:error] %></p> 
-        <% end %>		
-      </div>
-
-      <div class="span6">
-        <table style="text-align: left;margin: 16px;">
-          <tr>
-            <td>Organisation Name :</td>
-            <td><%= current_user.user_name  %></td>
-          </tr>
-          <tr>
-            <td>Email :</td>
-            <td><%= current_user.email  %></td>
-          </tr>
-          <tr>
-            <td>Organisation_Key</td>
-            <td><span class="org_key"><%= key_exists 'organisation_key'%></span></td>
-          </tr>
-          <tr>
-            <td>Token :</td>
-            <td><span class="access_key"><%= key_exists 'access_token' %></span></td>
-          </tr>
-          <tr>
-            <td><%  if current_user.api_key.blank? %> 
-          <%= link_to("Key generator" , "#",:class => "btn first_time_button" ,  :id => "key_genrator") %>
-        <%else%>  
-          <%= link_to("reset" , "#",:class => "btn key_reset" , :data_api => (current_user.api_key.id if current_user.api_key )) %>
-        <%end%>  
-        <%=  link_to("reset" , "#",:class => "btn hide first_time_button key_reset" ,:data_api => (current_user.api_key.id if current_user.api_key )) %></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+<style>
+  tr {
+    margin-top: 10px;
+  }
+  td{
+    margin-left: 10px
+  }
+</style>
+<% if flash[:error] %>
+  <p id="error" style="  margin-top: 10px; background: red; padding: 10px;" ><%= flash[:error] %></p> 
+<% end %>		
+  <center>
+  <table style="text-align: left;margin: 16px;">
+  <tr>
+    <td>Organisation Name :</td>
+    <td><%= current_user.user_name  %></td>
+  </tr>
+  <tr>
+    <td>Email :</td>
+    <td><%= current_user.email  %></td>
+  </tr>
+  <tr>
+    <td>Organisation_Key</td>
+    <td><span class="org_key"><%= key_exists 'organisation_key'%></span></td>
+  </tr>
+  <tr>
+    <td>Token :</td>
+    <td><span class="access_key"><%= key_exists 'access_token' %></span></td>
+  </tr>
+  <tr>
+    <td><%  if current_user.api_key.blank? %> 
+        <%= link_to("Key generator" , "#",:class => "btn first_time_button" ,  :id => "key_genrator") %>
+      <%else%>  
+        <%= link_to("reset" , "#",:class => "btn key_reset" , :data_api => (current_user.api_key.id if current_user.api_key )) %>
+      <%end%>  
+      <%=  link_to("reset" , "#",:class => "btn hide first_time_button key_reset" ,:data_api => (current_user.api_key.id if current_user.api_key )) %></td>
+  </tr>
+</table>
+  </center>

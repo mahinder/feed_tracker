@@ -1,0 +1,23 @@
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+      <div id="RHS_col_admin">
+        <h1>Customer Facing Companies</h1>
+        <div class="pull-left">
+          <%= render :partial => "layouts/search_box", :locals => {:width => 347} %>
+        </div>
+        <div class="pull-right">
+          <% semantic_form_remote_for @new_verified_company, :url => admin_companies_path, :method => :post do |f| %>
+            <%= f.text_field :name, :placeholder => "Add new company..." %>
+            <%= f.submit('Create') %>
+          <% end %>
+        </div>
+        <ul>
+          <%= render :partial => 'admin/companies/company', :collection => @companies, :as => :company %>
+        </ul>
+        <%= will_paginate @verified_companies %>
+      </div>
+    </div>
+  </div>
+</div>

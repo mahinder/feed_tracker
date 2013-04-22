@@ -1,0 +1,53 @@
+<%= stylesheet_link_tag 'formtastic', 'formtastic_changes' %>
+<div id="container">
+  <div id="content" class="clearfix">
+    <div id="mainContent" class="clearfix">
+      <%= render :partial => "/layouts/top_tabs_menu"%>
+      <div id="RHS_col_admin_general">
+        <h1>Editing News Source</h1>
+
+        <div style="padding-left:20px;width:900px;overflow: inherit">
+          <% semantic_form_for(@news_source, :url => admin_news_source_path(@news_source), :method => :put) do |f| %>
+            <%= f.error_messages %>
+            <%= f.inputs :name %>
+            <p>
+              <%= f.buttons %>
+              <%= link_to 'Show', admin_news_source_path(@news_source), :class => 'btn' %>
+              <%= link_to 'Back', admin_news_sources_path, :class => 'btn' %>
+            </p>
+          <% end %>
+          <br/>
+
+          <h3>News Feeds <%= link_to (image_tag 'add_icon.png'), 'javascript:;', :onclick => "$('#add-feed').toggle();", :title => 'Add news feed' %></h3>
+
+          <div style="padding-left:20px">
+            <div id="message_small_red_feeds"></div>
+            <div class='hide' id='add-feed'>
+              <hr />
+              <h3>Add News Feed</h3>
+              <% semantic_remote_form_for(@feed, :url => add_feed_admin_news_sources_path) do |f| %>
+                <div class="side-by-side clearfix" style="width:600px;z-index: 200;">
+                  <%= f.semantic_errors :state %>
+                  <% f.inputs do %>
+                    <%= f.input :url, :input_html => { :style => 'width: 72%;padding: 4px;', :id => 'add-url' } -%>
+                    <%= f.input :news_type, :input_html => { :style => 'width: 74%;', :id => 'add-news-type' }, :required => false -%>
+                    <%= f.input :industries, :required => false, :input_html => {:id => 'add-inds', :class => "chzn-select", :style => "width:600px", :size => 8} %>
+                    <%= f.input :locations, :required => false, :input_html => {:id => 'add-locs', :class => "chzn-select", :style => "width:600px", :size => 8} %>
+                    <%= f.commit_button :label => "Add News Feed" -%>
+                  <% end %>
+                </div>
+                <%= hidden_field_tag 'news_source_id', @news_source.id %>
+              <% end -%>
+            </div>
+            <ul id="feeds" class='unstyled'>
+              <% @news_source.news_feeds.each do |feed| %>
+                <%= render :partial => 'feed', :locals => {:feed => feed} %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render :partial => 'layouts/chosen_javascript' %>

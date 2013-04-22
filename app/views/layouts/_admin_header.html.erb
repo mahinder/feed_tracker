@@ -1,6 +1,6 @@
 <div id="header">
-  <a href="/home">
+  <a href="/">
     <%= image_tag '/assets/main_logo.png', :style => "padding-top: 4px;" %>
   </a>
-  <div class="welcome navlinks pull-right"><span class="welcome_greet_user" >Welcome, Admin</span> <%= link_to "Logout", destroy_user_session_path%></div>
+  <div class="welcome navlinks pull-right"><span class="welcome_greet_user" >Welcome, Admin</span> <%= link_to "Logout",destroy_user_session_path, :method => :delete%></div>
 </div>

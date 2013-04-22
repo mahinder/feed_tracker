@@ -1,0 +1,64 @@
+<div id="container">
+        <div id="content" class="clearfix">
+          <div id="mainContent" class="clearfix">
+            <%= render :partial => "/layouts/top_tabs_menu"%>
+            <div id="RHS_col_admin">
+                <h1>Account Upgrade </h1>
+                <% img_name = "arrow_desc.png"
+                   if params[:so] && params[:so] == 'ASC'
+           		      img_name = "arrow_asc.png"
+         		       end
+                %>
+                 <%= single_success_msg_div({:msg => flash[:success],:style => "margin-left:15px;"}) %>
+                 <div style="float:right;margin-right:20px"><%= link_to "<strong>Export</strong>", export_accounts_admin_users_path, :method => :get %></div>
+                <table cellspacing="0" border="0" class="data-table box-table shopping-cart" id="shopping-cart-table">
+                <col width="20%"/>
+                <col width="15%"/>
+                <col width="20%"/>
+                <col width="15%"/>
+                <col width="5%"/>
+                <col width="25%"/>
+                <thead>
+                  <tr class="first last">
+                    <th ><%= link_to('Name', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'name', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'name') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'name' %></th>
+                    <th><%= link_to('Company', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'company', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'company') ? 'DESC' : 'ASC')  : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'company' %></th>
+                    <th><%= link_to('Email', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'email', :so => (params[:so] && params[:so] == 'ASC') ?  ((params[:sf] == 'email') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'email' %></th>
+                    <th ><%= link_to('Last Login', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'll', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'll') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'll' %></th>
+                    <th><%= link_to('Plan', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'plan', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'plan') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'plan' %></th>                    
+                    <th class="last">
+                    <%= link_to('Date', {:flt_fld => params[:flt_fld],:flt_val => params[:flt_val],:search => params[:search],:q => params[:q], :sf => 'udate', :so => (params[:so] && params[:so] == 'ASC') ? ((params[:sf] == 'udate') ? 'DESC' : 'ASC') : 'ASC'} )%> <%= image_tag(img_name, :algin => "absmiddle") if params[:sf] == 'udate' %>
+                    </th>
+                  </tr>
+                      </thead>
+                <tbody>
+                <% @users.each do |user |%>
+                   <% account = user.account%>
+                   <% plan = account.plan%>
+                    <tr class="<%= cycle("first last", "first last odd", :name => "row_class") -%>">
+                    <td><%= user.name %></td>
+                    <td><%= user.company_name %></td>
+                    <td><a href="mailto:<%= user.email%>"><%= user.email%></a> </td>
+                    <td>
+											<% if user.last_login_at %>
+												<%= user.last_login_at.strftime("%m/%d/%Y %H:%M:%S") %>
+											<% else %>
+											&nbsp;
+											<% end %>								
+										</td>
+                    <td><%= plan.name %></td>
+                    <td class="last">          
+                    <%= pacific_time_instance_timestamp(account.updated_at) unless account.updated_at.blank?%>
+                    
+                    </td>
+                  </tr>
+                <% end %>  
+                </tbody>
+              </table>
+                    <br />
+                    <%= will_paginate @users%>
+                    <!-- end #mainContent -->
+                  </div>
+          </div>
+              </div>
+      </div>
+      <% flash.clear%>

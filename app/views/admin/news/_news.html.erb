@@ -3,8 +3,9 @@
 <% company_count = @companies.count %>
 <% @people = @news.people %>
 <% source= @news.user %>
+
 <tbody id="news-<%= news.id %>">
-<tr class="first last" style="<%= news -%>">
+<tr class="first last" style="<%= bg_style(news) -%>">
   <div class="news-block">
     <td>
       <%= DateTime.parse("#{news.published_at}").strftime('%d/%m/%y') -%>
@@ -40,5 +41,11 @@
     <hr/>
   </td>
 </tr>
-
+<% if processing?(news_id = news.id) %>
+    <script type="text/javascript">
+        news_id = <%= news_id %>;
+        lockedNewsIds.push(news_id);
+        blockRow(news_id);
+    </script>
+<% end %>
 </tbody>

@@ -8,7 +8,7 @@
 				<% end %>
 			</ul>
 
-			<% form_tag :url=> add_company_admin_news_index_path do %>
+			<%= form_tag :url=> add_company_admin_news_index_path,:remote => true do %>
 			<span class="wrap">
 				<div style="padding:10px; font-size:14px;" >
 					<table class="add-companies">
@@ -33,7 +33,7 @@
 				<% end %>
 			</ul>
 
-			<% form_tag :url=>add_company_admin_news_index_path do %>
+			<%= form_tag :url=>add_person_admin_news_index_path ,:remote => true do %>
 				<span class="wrap">
 					<div style="font-size:12px;" >
 						<table class="add-people">
