@@ -1,5 +1,5 @@
 <%= @errors.each { |error| error.message } unless @errors.nil? %>
-<%= semantic_form_remote_for news, :url => url, :method => method, :before => "hideEditNewsPanel($(this), #{news.id})" do |f| %>
+<%= semantic_form_for news, :url => url, :method => method  , :before => "hideEditNewsPanel($(this), #{news.id})" , :remote => true do |f| %>
     <div style="padding-left:20px;overflow: inherit" class="update-tagging">
       <%= f.inputs do %>
           <% if news.id %>
@@ -22,7 +22,7 @@
         <%= f.input :headline, :required => true, :input_html => {:size => 50} %>
         <%= f.input :published_at, :as => :string, :input_html => {:size => 100, :style => 'width:72%'} %>
       </div>
-      <% f.buttons :style => 'width:100%' do %>
+      <%= f.buttons :style => 'width:100%' do %>
           <%= f.commit_button :label => "Save Changes" %>
       <% end %>
     </div>

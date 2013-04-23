@@ -2,8 +2,8 @@ require 'set'
 
 class InterestingNews < ActiveRecord::Base
   belongs_to :news
-  validates_presence_of :news_id, :user_id
-  validates_uniqueness_of :news_id, :scope => [:user_id]
+  validates :news_id, :user_id , :presence => true
+  validates :news_id, :uniqueness => {:scope => :user_id}
 
   def self.refresh_for_user task, user_id
     user = User.find user_id

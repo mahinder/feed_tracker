@@ -1,5 +1,5 @@
 class News < ActiveRecord::Base
-  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data
+  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data , :industry_ids, :location_ids, :job_title_ids, :job_function_ids
   has_many :news_indices, :dependent => :destroy, :class_name => 'NewsIndex'
   belongs_to :news_feeds
   has_many :people_in_news, :dependent => :destroy, :class_name => 'PeopleInNews'
@@ -352,8 +352,8 @@ class News < ActiveRecord::Base
   end
 
   def on_news_update
-    job_id = NewsInterestCacheBuilder.create({'reason' => Constants::INTEREST_CACHE_UPDATE_REASON::NEWS_UPDATE, 'news_id' => id})
-    RunningJob.create!({:job_id => job_id, :resource_id => id, :resource_type => Constants::RUNNING_JOBS::NEWS})
+#    job_id = NewsInterestCacheBuilder.create({'reason' => Constants::INTEREST_CACHE_UPDATE_REASON::NEWS_UPDATE, 'news_id' => id})
+#    RunningJob.create!({:job_id => job_id, :resource_id => id, :resource_type => Constants::RUNNING_JOBS::NEWS})
   end
 
   def self.generate_news_type_map(news_items, user)

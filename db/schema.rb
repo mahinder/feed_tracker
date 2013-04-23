@@ -50,6 +50,10 @@ ActiveRecord::Schema.define(:version => 20133014151048) do
     t.integer "relevance",  :default => 0
   end
 
+  create_table "designations", :force => true do |t|
+    t.string "name"
+  end
+
   create_table "domains", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false

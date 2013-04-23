@@ -1,5 +1,37 @@
+<style>
+  footer {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+footer .container > ul {
+    list-style: none;
+    padding-top: 50px;
+    padding-bottom: 67px;
+    margin-left: 0px;
+}
+
+footer .container > ul > li {
+    float: left;
+}
+
+footer .container > ul > li > a {
+    text-decoration: none;
+}
+
+footer .container > ul > li > span {
+    padding-left: 13px;
+    padding-right: 13px;
+}
+  
+.newsfooter{
+  margin-left: 66px;
+}
+</style>
+
 <footer>
-  <div class="container">
+  <div class="container <% if controller.controller_name =~ /news/  %> newsfooter<%end%>" >
+    
     <ul class="footer_ul_ie">
       <li><%= link_to "About Us", "/home/about_us"  %><span>|</span></li>
       <li><%= link_to "News", ""  %><span>|</span></li>

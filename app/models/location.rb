@@ -1,6 +1,5 @@
 class Location < ActiveRecord::Base
-  validates_uniqueness_of :name
-  validates_presence_of :name
+validates :name ,:presence => true ,:uniqueness => true
 
   def self.tag_in_news(news_id, location_name)
     country_code = Geocoder.search(location_name).first.country_code

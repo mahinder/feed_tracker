@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
   belongs_to :previous_company,:class_name=> "Company", :foreign_key=>"last_company_id"
   belongs_to :current_designation,:class_name=> "Designation", :foreign_key=>"current_designation_id"
   belongs_to :previous_designation,:class_name=> "Designation", :foreign_key=>"last_designation_id"
-  
+  attr_accessible :first_name, :last_name, :current_company_id, :last_company_id, :current_designation_id, :last_designation_id
   def full_name
     "#{self.first_name} #{self.last_name}".titlecase
   end

@@ -1,6 +1,5 @@
 class NewsType < ActiveRecord::Base
-  validates :name , :uniqueness => true
-  validates :name , :presence => true
+  validates :name ,:presence => true ,:uniqueness => true
 attr_accessible :name
   def news(user, from_date, args={})
     condition = SmartTuple.new(" AND ")

@@ -1,6 +1,5 @@
 class JobTitle < ActiveRecord::Base
-  validates_uniqueness_of :name
-  validates_presence_of :name
+validates :name ,:presence => true ,:uniqueness => true
 
   def self.tag_in_news(news)
     job_title_ids = Thunderbolt::Pattern.instance.search(news.headline)
