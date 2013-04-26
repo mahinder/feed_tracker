@@ -1,5 +1,5 @@
 <li id ="<%="company_#{company.id}_#{news_id}"-%>">
   <%=company.name%> |
-  <%=link_to 'remove',{:url=>remove_company_admin_news_index_path(:id=>company.id,:news_id=>news_id)},{:style=>"color:red;",:method=>:delete}%> |
+  <%=link_to 'remove',remove_company_admin_news_index_path(:company_id=>company.id,:news_id=>news_id),{:style=>"color:red;",:method=>:delete, :remote => true}%> |
   <%= link_to("Search on Jigsaw", "javascript:openPopup('http://www.jigsaw.com/FreeTextSearchCompany.xhtml?opCode=search&freeText="+(company.url || company.name).gsub(' ', '+')+"', '#{company.id}');") -%>
 </li>

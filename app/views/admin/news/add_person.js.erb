@@ -1,0 +1,10 @@
+<%#if @message =~ /Person is already in news./%>
+<%#*$(<%=@message_id%>).update("<%= escape_javascript render('/layouts/message_small_red', :locals => {:message => @message, :id => @message_id}) %>");%>
+$(<%=@message_id%>).append("<a href=\'/mycontroller/myaction\'>Action!</a>") 
+<%#else%>
+
+
+<%#end%>
+
+<%#*page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => message, :id => message_id}%>
+alert("<%= @data %>")

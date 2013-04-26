@@ -2,6 +2,7 @@ class Admin::NewsController < ApplicationController
   #before_filter :protect_admin_access
   load_and_authorize_resource
   layout "admin"
+  require 'ruby-debug'
   def news_sort_order
     "id desc"
   end
@@ -30,6 +31,7 @@ class Admin::NewsController < ApplicationController
   # GET /news/1
   # GET /news/1.xml
   def show
+    debugger
     @news = News.find(params[:id])
     @people = @news.people
     @companies = @news.companies
@@ -44,7 +46,7 @@ class Admin::NewsController < ApplicationController
   # GET /news/new.xml
   def new
     @news = News.new
-#   @news.news_source = NewsSource.last
+    #   @news.news_source = NewsSource.last
     @news.published_at = Time.now
     respond_to do |format|
       format.html # new.html.erb
@@ -54,6 +56,7 @@ class Admin::NewsController < ApplicationController
 
   # GET /news/1/edit
   def edit
+    debugger
     @news = News.find params[:id]
     @people = @news.people
     @companies = @news.companies
@@ -108,33 +111,33 @@ class Admin::NewsController < ApplicationController
   end
 
   def add_company
-    render :update do |page|
-      name = params[:company][:name]
-      news_id = params[:news_id]
-      name = name.strip unless name.nil?
-      news = News.find(news_id)
-      unless name.nil? or name.blank?
-        company = CompaniesInNews.create_company_tag(news_id, name, 1)
-        message_id = "message_small_red_companies_#{news.id}"
-        if company
-          page.insert_html :bottom, "companies-#{news_id}", :partial => 'company', :locals => {:company => company, :news_id => news_id}
-          page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
-          if news.ready
-            news.on_news_update
-            page << "hideBlockLockRow(#{news_id});"
-          end
-        else
-          message = "\"#{name}\" is already in news."
-          page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => message, :id => message_id}
+    name = params[:company][:name]
+    news_id = params[:news_id]
+    name = name.strip unless name.nil?
+    news = News.find(news_id)
+   render :update do |page| 
+    unless name.nil? or name.blank?
+      company = CompaniesInNews.create_company_tag(news_id, name, 1)
+      message_id = "message_small_red_companies_#{news.id}"
+      if company
+        page.insert_html :bottom, "companies-#{news_id}", :partial => 'company', :locals => {:company => company, :news_id => news_id}
+        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
+        if news.ready
+          news.on_news_update
+          page << "hideBlockLockRow(#{news_id});"
         end
+      else
+        message = "\"#{name}\" is already in news."
+        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => message, :id => message_id}
       end
     end
+   end 
   end
 
   def remove_company
+    news_id = params[:news_id]
+    company_id = params[:company_id]
     render :update do |page|
-      news_id = params[:news_id]
-      company_id = params[:id]
       if news_id and company_id
         cin = CompaniesInNews.find_by_news_id_and_company_id news_id, company_id
         cin.destroy if cin
@@ -153,6 +156,7 @@ class Admin::NewsController < ApplicationController
     first_name = params["first_name_#{news.id}"]
     last_name = params["last_name_#{news.id}"]
     company_name = params["company_#{news.id}"]
+  render :update do |page|  
     company = Company.find_or_create_by_name company_name.strip unless company_name.blank? or company_name.nil?
     company_id = company ? company.id : nil
     title_name = params[:title]
@@ -166,49 +170,44 @@ class Admin::NewsController < ApplicationController
     last_title_id = last_title ? last_title.id : nil
 
     person = Person.find_or_create_by_first_name_and_last_name_and_current_company_id_and_current_designation_id :first_name => first_name, :last_name => last_name, :current_company_id => company_id, :last_company_id => last_company_id, :current_designation_id => title_id, :last_designation_id => last_title_id
-
     pin = PeopleInNews.find_by_news_id_and_person_id news.id, person.id
     message_id = "message_small_red_people_#{news.id}"
-    render :update do |page|
-      if pin
-        message = "Person is already in news."
-        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => message, :id => message_id}
-      else
-        news.people_in_news.create :person_id => person.id
-        page.insert_html :bottom, "people-#{news.id}", :partial => 'person', :locals => {:person => person, :news_id => news.id}
-        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
-        if news.ready
-          news.on_news_update
-          page << "hideBlockLockRow(#{news.id});"
-        end
+    if pin
+      message = "Person is already in news."
+    else
+      news.people_in_news.create :person_id => person.id
+      page.insert_html :bottom, "people-#{news.id}", :partial => 'person', :locals => {:person => person, :news_id => news.id}
+      page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
+      if news.ready
+        news.on_news_update
+        page << "hideBlockLockRow(#{news.id});"
       end
+      @message = "Person is already in news."
+    end
     end
   end
 
   def remove_person
     render :update do |page|
       news_id = params[:news_id]
-      person_id = params[:id]
-
+      person_id = params[:person_id]
+    
       if news_id and person_id
         pin = PeopleInNews.find_by_news_id_and_person_id news_id, person_id, :include => :person
         if pin
           person = pin.person
           first_name = person.first_name ? person.first_name : ''
           last_name = person.last_name ? person.last_name : ''
-
           page << "document.getElementById('first_name_#{news_id}').value='#{first_name}'"
           page << "document.getElementById('last_name_#{news_id}').value='#{last_name}'"
           page << "document.getElementById('company_#{news_id}').value=''"
           page << "document.getElementById('last_company_#{news_id}').value=''"
           page << "document.getElementById('title').value=''"
           page << "document.getElementById('last_title').value=''"
-
           pin.destroy
-
           page.remove "person_#{person_id}_#{news_id}"
-          news = News.find(news_id)
-          if news.ready
+          news = News.find_by_id(news_id)
+          if news && news.ready
             news.on_news_update
             page << "hideBlockLockRow(#{news_id});"
           end
@@ -220,18 +219,18 @@ class Admin::NewsController < ApplicationController
   end
 
   def toggle_state
+    debugger
     news = News.find params[:id]
     if news.ready && params[:state] == 'block' || news.blocked && params[:state] == 'ready' || !news.blocked && !news.ready
       news.blocked = (params[:state] == 'block')
       news.ready = !news.blocked
       news.save
       render :json => {:valid => true , :news => news.id}
-      
+     
     else
       render :json => {:valid => false}
     end
   end
-
   def path_to_edit_next_news last_news_id
     news = News.find :last, :conditions => ["ready = 0 and blocked = 0 and id < ?", last_news_id]
     return news ? edit_admin_news_path(news) : nil
@@ -245,7 +244,7 @@ class Admin::NewsController < ApplicationController
   end
 
   def lock_news
-#    running_jobs = RunningJob.find(:all, :conditions => ['created_at >= ?', session[:last_locked_at]])
+    #    running_jobs = RunningJob.find(:all, :conditions => ['created_at >= ?', session[:last_locked_at]])
     running_jobs = []
     news_ids = running_jobs.collect { |job| job.resource_id }
     session[:last_locked_at] = running_jobs.empty? ? session[:last_locked_at] : running_jobs.sort_by(&:created_at).last.created_at
@@ -260,7 +259,6 @@ class Admin::NewsController < ApplicationController
         "});"
     end
   end
-
   def unlock_news
     locked_news_ids = JSON.parse(params[:locked_news_ids])
     unlocked_news_ids = []
@@ -331,7 +329,7 @@ class Admin::NewsController < ApplicationController
     end
   end
 
-  def news_data
+  def news_data 
     date = params[:day]
     all_sources_count = []
     news_sources = NewsSource.all
@@ -373,6 +371,5 @@ class Admin::NewsController < ApplicationController
       page.hide('progress_div')
     end
   end
-
 
 end
