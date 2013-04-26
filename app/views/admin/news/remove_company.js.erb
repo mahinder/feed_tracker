@@ -1,0 +1,11 @@
+  <%    if @news_id and @company_id
+        cin = CompaniesInNews.find_by_news_id_and_company_id @news_id, @company_id
+        cin.destroy if cin 
+  %>
+$("#company_"+<%=@company_id%>+"_"+<%= @news_id%>).remove();
+  <%      news = News.find(@news_id)
+        if news.ready
+          news.on_news_update
+       end
+      end
+%>  

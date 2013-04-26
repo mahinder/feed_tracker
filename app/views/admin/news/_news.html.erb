@@ -11,7 +11,7 @@
       <%= DateTime.parse("#{news.published_at}").strftime('%d/%m/%y') -%>
     </td>
     <td>
-      <%= @companies.collect { |c| c.name }.join(', ') -%>
+      <%= @companies.collect { |c|  c.name }.join(', ') -%>
     </td>
     <td>
       <%= source.user_name if source.present? -%>

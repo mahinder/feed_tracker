@@ -135,20 +135,8 @@ class Admin::NewsController < ApplicationController
   end
 
   def remove_company
-    news_id = params[:news_id]
-    company_id = params[:company_id]
-    render :update do |page|
-      if news_id and company_id
-        cin = CompaniesInNews.find_by_news_id_and_company_id news_id, company_id
-        cin.destroy if cin
-        page.remove "company_#{company_id}_#{news_id}"
-        news = News.find(news_id)
-        if news.ready
-          news.on_news_update
-          page << "hideBlockLockRow(#{news_id});"
-        end
-      end
-    end
+    @news_id = params[:news_id]
+    @company_id = params[:company_id]
   end
 
   def add_person
@@ -311,7 +299,6 @@ class Admin::NewsController < ApplicationController
     file_name = "linksv_news_#{1.week.ago.strftime('%b-%d-%Y')}_to_#{Time.now.strftime('%b-%d-%Y')}.csv"
     csv = %w(Source Headline).to_csv
     @news.each { |news| csv << [news.news_source.name, news.news_headline].to_csv }
-
     send_data csv, :filename => file_name, :type => "text/csv"
   end
 
