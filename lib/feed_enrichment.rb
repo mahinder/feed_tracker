@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'calais'
-require 'ruby-debug'
 class FeedEnrichment 
   
   def feed_enrichment

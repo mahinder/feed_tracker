@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'feedzirra'
-require 'ruby-debug'
 class FeedFetcher
   
   def fetch_feed
