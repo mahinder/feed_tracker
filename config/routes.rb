@@ -20,7 +20,18 @@ FeedTracker::Application.routes.draw do
     end
   end
   
-  
+   namespace :rm do |rm|
+    resources :companies do
+      member do 
+        get  :show_ajax , :filter_target_company 
+        delete :remove_target_company 
+      end
+      collection do 
+        get :show_target_companies , :target_companies , :export_prospects ,:list
+        post:create_target_companies
+      end
+    end 
+  end
   #mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
 
   devise_for :users

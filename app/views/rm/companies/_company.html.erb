@@ -1,0 +1,7 @@
+<div id="<%= companies_news_container_dom_id(company) %>" data-name='<%= company.name.downcase %>'>
+  <% display_pic = current_user.display_pic %>
+  <% pic_url = display_pic.present? ? display_pic : '/images/new_images/no_pic.gif' %>
+  <%= render :partial => 'news/company_news_info',
+             :locals => {:info => {:company => company, :news => news}, :pic_url => pic_url, :reminder_btn => true,
+                         :sf_link_function => sf_link_function} %>
+</div>

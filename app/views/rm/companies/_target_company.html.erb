@@ -1,0 +1,5 @@
+<% name = @company.name %>
+<li id='target-company-<%= @company.id %>' data-name='<%= name.downcase %>'>
+  <%= link_to_function(name, "filterTargetCompany(#{@company.id})", :title => 'Filter') %>
+  <%= link_to_function('<i class="icon-remove"></i>', "removeTargetCompany(#{@company.id}, '#{name}')", :title => 'Remove') %>
+</li>

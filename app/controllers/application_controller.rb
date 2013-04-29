@@ -12,5 +12,10 @@ class ApplicationController < ActionController::Base
     else
       redirect_to root_url
     end
-  end   
+  end  
+  
+   protected
+      def code_injection? string
+        (string.match /<script>/i) ? true :false
+      end
 end

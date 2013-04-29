@@ -1,0 +1,28 @@
+<%  news_id = params[:news_id]
+person_id = params[:person_id] 
+if news_id and person_id
+  pin = PeopleInNews.find_by_news_id_and_person_id news_id, person_id, :include => :person
+  if pin
+    person = pin.person
+    first_name = person.first_name ? person.first_name : ''
+    last_name = person.last_name ? person.last_name : ''
+  %>
+    document.getElementById('first_name_<%=news_id%>').value='<%=first_name%>'
+    document.getElementById('last_name_<%=news_id%>').value='<%=last_name%>'
+    document.getElementById('company_<%=news_id%>').value=''
+    document.getElementById('last_company_<%=news_id%>').value=''
+    document.getElementById('title').value=''
+    document.getElementById('last_title').value=''
+    <%  pin.destroy %>
+    $("#person_<%=person_id%>_<%=news_id%>").remove()
+    <%   news = News.find_by_id(news_id)
+    if news && news.ready
+      news.on_news_update 
+    end
+  else %>
+    if('#person_<%=person_id%>_<%=news_id%>').length > 0) { 
+    $('person_<%=person_id%>_<%=news_id%>').remove(); 
+    }
+  <%end%>
+
+<%end%>

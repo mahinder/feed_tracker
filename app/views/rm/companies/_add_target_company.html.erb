@@ -1,0 +1,20 @@
+<% width =  local_assigns[:width].nil?? '150px':'185px'  %>
+
+<h5><%= 'Add Target Company' unless local_assigns[:my_placeholder] %></h5>
+<%placeholder = local_assigns[:my_placeholder]? "Start typing Target Company" : 'Add Target Company'  %>
+<div class="input-append">
+  <% form_remote_tag :url => {:controller => "/rm/companies", :action => :create_target_companies} do %>
+    <table>
+      <tr>
+        <td>
+          <%= text_field :company, :name, {:id => 'company_name', :placeholder => placeholder , :size => nil, :style => "width: #{width};"} %>
+          <button class="btn" type="submit">+</button>
+        </td>
+      </tr>
+    </table>
+    <%= hidden_field_tag :gritter_enabled, local_assigns[:gritter_enabled]  %>
+    <div id="message_small_green"></div>
+  <% end %>
+</div>
+
+<%= render :partial => 'layouts/upgrade_membership' , :locals => {:user => user}%>

@@ -111,27 +111,11 @@ class Admin::NewsController < ApplicationController
   end
 
   def add_company
-    name = params[:company][:name]
-    news_id = params[:news_id]
-    name = name.strip unless name.nil?
-    news = News.find(news_id)
-   render :update do |page| 
-    unless name.nil? or name.blank?
-      company = CompaniesInNews.create_company_tag(news_id, name, 1)
-      message_id = "message_small_red_companies_#{news.id}"
-      if company
-        page.insert_html :bottom, "companies-#{news_id}", :partial => 'company', :locals => {:company => company, :news_id => news_id}
-        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
-        if news.ready
-          news.on_news_update
-          page << "hideBlockLockRow(#{news_id});"
-        end
-      else
-        message = "\"#{name}\" is already in news."
-        page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => message, :id => message_id}
-      end
-    end
-   end 
+    @name = params[:company][:name]
+    @news_id = params[:news_id]
+    @name = @name.strip unless @name.nil?
+    @news = News.find(@news_id)
+    
   end
 
   def remove_company
@@ -140,70 +124,15 @@ class Admin::NewsController < ApplicationController
   end
 
   def add_person
-    news = News.find params[:news_id]
-    first_name = params["first_name_#{news.id}"]
-    last_name = params["last_name_#{news.id}"]
-    company_name = params["company_#{news.id}"]
-  render :update do |page|  
-    company = Company.find_or_create_by_name company_name.strip unless company_name.blank? or company_name.nil?
-    company_id = company ? company.id : nil
-    title_name = params[:title]
-    title = Designation.find_or_create_by_name title_name.strip unless title_name.blank? or title_name.nil?
-    title_id = title ? title.id : nil
-    last_company_name = params[:last_company]
-    last_company = Company.find_or_create_by_name last_company_name.strip unless last_company_name.blank? or last_company_name.nil?
-    last_company_id = last_company ? last_company.id : nil
-    last_title_name = params[:last_title]
-    last_title = Designation.find_or_create_by_name last_title_name.strip unless last_title_name.blank? or last_title_name.nil?
-    last_title_id = last_title ? last_title.id : nil
-
-    person = Person.find_or_create_by_first_name_and_last_name_and_current_company_id_and_current_designation_id :first_name => first_name, :last_name => last_name, :current_company_id => company_id, :last_company_id => last_company_id, :current_designation_id => title_id, :last_designation_id => last_title_id
-    pin = PeopleInNews.find_by_news_id_and_person_id news.id, person.id
-    message_id = "message_small_red_people_#{news.id}"
-    if pin
-      message = "Person is already in news."
-    else
-      news.people_in_news.create :person_id => person.id
-      page.insert_html :bottom, "people-#{news.id}", :partial => 'person', :locals => {:person => person, :news_id => news.id}
-      page.replace message_id, :partial => '/layouts/message_small_red', :locals => {:message => '', :id => message_id}
-      if news.ready
-        news.on_news_update
-        page << "hideBlockLockRow(#{news.id});"
-      end
-      @message = "Person is already in news."
-    end
-    end
+    @news = News.find params[:news_id]
+    @first_name = params["first_name_#{@news.id}"]
+    @last_name = params["last_name_#{@news.id}"]
+    @company_name = params["company_#{@news.id}"]
+  
   end
 
   def remove_person
-    render :update do |page|
-      news_id = params[:news_id]
-      person_id = params[:person_id]
     
-      if news_id and person_id
-        pin = PeopleInNews.find_by_news_id_and_person_id news_id, person_id, :include => :person
-        if pin
-          person = pin.person
-          first_name = person.first_name ? person.first_name : ''
-          last_name = person.last_name ? person.last_name : ''
-          page << "document.getElementById('first_name_#{news_id}').value='#{first_name}'"
-          page << "document.getElementById('last_name_#{news_id}').value='#{last_name}'"
-          page << "document.getElementById('company_#{news_id}').value=''"
-          page << "document.getElementById('last_company_#{news_id}').value=''"
-          page << "document.getElementById('title').value=''"
-          page << "document.getElementById('last_title').value=''"
-          pin.destroy
-          page.remove "person_#{person_id}_#{news_id}"
-          news = News.find_by_id(news_id)
-          if news && news.ready
-            news.on_news_update
-            page << "hideBlockLockRow(#{news_id});"
-          end
-        else
-          page << "if('#person_#{person_id}_#{news_id}').length > 0) { $('person_#{person_id}_#{news_id}').remove(); }"
-        end
-      end
-    end
   end
 
   def toggle_state

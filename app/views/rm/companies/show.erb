@@ -1,0 +1,81 @@
+<style type="text/css">
+  .rm-company-conn td {
+    border-bottom: none !important;
+    padding-bottom: 20px;
+  }
+</style>
+<% display_pic = current_user.display_pic %>
+<% pic_url = display_pic.present? ? display_pic : '/images/new_images/no_pic.gif' %>
+<div class="content">
+  <div>
+    <div class="span12 white-background border_bottom">
+      <h2><%= @company.name %></h2>
+
+      <div style="padding-left: 20px">
+        <%= @company.street1 %>
+        <% unless @company.street2.blank? %>,<%= @company.street2 %>
+        <% end %>
+        <% unless @company.city.blank? %>,<%= @company.city %>
+        <% end %>
+        <% unless @company.city.blank? %>,<%= @company.state %>
+        <% end %>
+        <% @company.zip %>
+        <% unless @company.country.blank? %>, <%= @company.country %>
+        <% end %>
+        <br/>
+        <% unless @company.location.blank? %>
+          Location: <%= @company.location %>
+          <br/>
+        <% end %>
+        <% if  !@company.phone1.blank? %>Phone:   <%= @company.phone1 %>
+          <br/>
+        <% end %>
+        <% if  !@company.url.blank? %>Website:
+          <a href="<%= @company.formated_url %>" target="_blank"><%= @company.url %></a><br/>
+        <% end %>
+        <% if !@company.industry.blank? %>Industry: <%= @company.industry %>
+          <br/>
+        <% end %>
+        <% if !@company.employees.blank? || !@company.employee_range.blank? %>
+          Employees: <%= @company.employees.blank? ? @company.employee_range : @company.employees %>
+          <br/>
+        <% end %>
+        <% if !@company.revenue.blank? %>
+          Revenue: <%= revenue_format(@company.revenue.to_i) %>
+        <% end %>
+      </div>
+      <div style="padding-left: 20px;padding-top: 10px">
+        <%= link_to @li_conn_text, @li_conn_url, :target => "_blank" if @li_conn_count.to_i > 0 %>
+      </div>
+      <div>
+        <table style="width: 100%">
+          <tr>
+            <td style="padding-left: 20px;">
+              <%= render :partial => 'layouts/search_box', :locals => {:placeholder => 'Search prospect & 1st hops'} %>
+            </td>
+            <td style="text-align: right;width: 50%;padding-right: 20px">
+              <%= link_to_remote "<button class='btn btn-primary btn-small'><i class='icon-white icon-briefcase'></i>&nbsp;Export to Excel</button>", :url => export_prospects_rm_companies_path(:company_id => @company.id) %>
+              <div id="message_small_green" style="font-size: 12px; color:green;"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="span12 white-background rm-company-conn">
+      <table style='margin-left: 20px;width:100%'>
+        <tbody class='news-alert'>
+          <tr>
+            <td class='info' style="border-bottom: 1px solid lightgray;">
+              <%= render :partial => 'news/connection', :collection => @connections,
+                :locals => {:pic_url => pic_url, :partially_titled => true} %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <%= will_paginate @connections %>
+    </div>
+  </div>
+</div>
