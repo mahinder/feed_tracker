@@ -31,7 +31,6 @@ class Admin::NewsController < ApplicationController
   # GET /news/1
   # GET /news/1.xml
   def show
-    debugger
     @news = News.find(params[:id])
     @people = @news.people
     @companies = @news.companies
@@ -56,7 +55,6 @@ class Admin::NewsController < ApplicationController
 
   # GET /news/1/edit
   def edit
-    debugger
     @news = News.find params[:id]
     @people = @news.people
     @companies = @news.companies
@@ -136,7 +134,6 @@ class Admin::NewsController < ApplicationController
   end
 
   def toggle_state
-    debugger
     news = News.find params[:id]
     if news.ready && params[:state] == 'block' || news.blocked && params[:state] == 'ready' || !news.blocked && !news.ready
       news.blocked = (params[:state] == 'block')
@@ -288,4 +285,8 @@ class Admin::NewsController < ApplicationController
     end
   end
 
+ 
+  
+  
+  
 end

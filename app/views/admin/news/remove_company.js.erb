@@ -3,6 +3,12 @@
         cin.destroy if cin 
   %>
 $("#company_"+<%=@company_id%>+"_"+<%= @news_id%>).remove();
+<%
+    news_id = @news_id
+    news_type_options = [['- Select News Type -', nil]]
+    NewsType.all.collect { |n| news_type_options << [n.name, n.id] } 
+ %> 
+   $("#news-<%=news_id%>").replaceWith("<%= escape_javascript(render(:partial => "news",:collection => [News.find(news_id)], :as => :news, :locals => {:max => 1, :news_type_options => news_type_options})).html_safe %>");
   <%      news = News.find(@news_id)
         if news.ready
           news.on_news_update

@@ -4,6 +4,12 @@
   if company %>
     $("#companies-<%=@news_id%>").append("<%= escape_javascript(render(:partial => "company",   :locals => {:company => company, :news_id => @news_id})).html_safe %>");
     $("#<%=message_id%>").html("<%= escape_javascript(render(:partial => "/layouts/message_small_red",   :locals => {:message => '', :id => message_id})).html_safe %>");
+ <%
+    news_id = @news.id
+    news_type_options = [['- Select News Type -', nil]]
+    NewsType.all.collect { |n| news_type_options << [n.name, n.id] } 
+ %> 
+   $("#news-<%=news_id%>").replaceWith("<%= escape_javascript(render(:partial => "news",:collection => [News.find(news_id)], :as => :news, :locals => {:max => 1, :news_type_options => news_type_options})).html_safe %>");
     <%     if @news.ready
       @news.on_news_update %>
     <%        end

@@ -54,9 +54,9 @@ var changeNewsState = function(news_id, new_state) {
 }
 
 var hideBlockLockRow = function(news_id) {
-    hideEditNewsPanel($("#" + news_id), news_id);
-    blockRow(news_id);
-    lockedNewsIds.push(news_id);
+//    hideEditNewsPanel($("#" + news_id), news_id);
+//    blockRow(news_id);
+//    lockedNewsIds.push(news_id);
 }
 
 var deleteNews = function(news_id) {
