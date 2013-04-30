@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+
 //= require_tree .
 
 var toggleDisplay = function (id) {
@@ -53,4 +54,25 @@ var updateNewsType = function(newsId, newVal) {
         }
     })
 }
+
+
+    $(document).ready(function() {
+        jQuery('#all_feed_table').dataTable({
+            sPaginationType:"full_numbers",
+            "bJQueryUI":true,
+            "sDom":'T<"clear">lfrtip'
+        })
+        
+        jQuery('#day_feed_table').dataTable({
+            sPaginationType:"full_numbers",
+            "bJQueryUI":true,
+            "sDom":'T<"clear">lfrtip'
+        })
+        jQuery('#week_feed_table').dataTable({
+            sPaginationType:"full_numbers",
+            "bJQueryUI":true,
+            "sDom":'T<"clear">lfrtip'
+        })
+        
+    })
 

@@ -8,32 +8,84 @@
 </style>
 <% if flash[:error] %>
   <p id="error" style="  margin-top: 10px; background: red; padding: 10px;" ><%= flash[:error] %></p> 
-<% end %>		
-  <center>
-  <table style="text-align: left;margin: 16px;">
-  <tr>
-    <td>Organisation Name :</td>
-    <td><%= current_user.user_name  %></td>
-  </tr>
-  <tr>
-    <td>Email :</td>
-    <td><%= current_user.email  %></td>
-  </tr>
-  <tr>
-    <td>Organisation_Key</td>
-    <td><span class="org_key"><%= key_exists 'organisation_key'%></span></td>
-  </tr>
-  <tr>
-    <td>Token :</td>
-    <td><span class="access_key"><%= key_exists 'access_token' %></span></td>
-  </tr>
-  <tr>
-    <td><%  if current_user.api_key.blank? %> 
-        <%= link_to("Key generator" , "#",:class => "btn first_time_button" ,  :id => "key_genrator") %>
-      <%else%>  
-        <%= link_to("reset" , "#",:class => "btn key_reset" , :data_api => (current_user.api_key.id if current_user.api_key )) %>
-      <%end%>  
-      <%=  link_to("reset" , "#",:class => "btn hide first_time_button key_reset" ,:data_api => (current_user.api_key.id if current_user.api_key )) %></td>
-  </tr>
-</table>
-  </center>
+<% end %>
+<div class ="row-fluid"> 
+
+
+ 
+  <div class ="span5 offset1  ">
+    <table style="text-align: left;margin: 16px;">
+      <tr>
+        <td>Organisation Name :</td>
+        <td><%= current_user.user_name  %></td>
+      </tr>
+      <tr>
+        <td>Email :</td>
+        <td><%= current_user.email  %></td>
+      </tr>
+      <tr>
+        <td>Organisation_Key</td>
+        <td><span class="org_key"><%= key_exists 'organisation_key'%></span></td>
+      </tr>
+      <tr>
+        <td>Token :</td>
+        <td><span class="access_key"><%= key_exists 'access_token' %></span></td>
+      </tr>
+      <tr>
+
+      </tr>
+      <tr>
+        <td><%  if current_user.api_key.blank? %> 
+            <%= link_to("Key generator" , "#",:class => "btn first_time_button" ,  :id => "key_genrator") %>
+          <%else%>  
+            <%= link_to("reset" , "#",:class => "btn key_reset" , :data_api => (current_user.api_key.id if current_user.api_key )) %>
+          <%end%>  
+          <%=  link_to("reset" , "#",:class => "btn hide first_time_button key_reset" ,:data_api => (current_user.api_key.id if current_user.api_key )) %></td>
+      </tr>
+    </table>
+  </div>
+  <div class ="span5 ">
+    <h1 class="block_heading">All Feed Urls</h1>
+    <table id="all_feed_table"  class ="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render :partial => 'news_feed' , :collection => current_user.news_feeds ,:as => :news_feed %>
+      </tbody>
+    </table>
+  </div>  
+</div>
+
+<div class="row-fluid">
+   <div class ="span5 offset1">
+    <h1 class="block_heading">Weekly Feed Urls</h1>
+    <table id="week_feed_table"  class ="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render :partial => 'news_feed' , :collection => ((current_user.news_feeds).weekly if current_user.news_feeds)  ,:as => :news_feed %>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class ="span5">
+    <h1 class="block_heading">Today Feed Urls</h1>
+    <table id="day_feed_table"  class ="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render :partial => 'news_feed' , :collection => ((current_user.news_feeds).today if current_user.news_feeds)  ,:as => :news_feed %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

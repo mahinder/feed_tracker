@@ -9,7 +9,8 @@ class NewsFeed < ActiveRecord::Base
   has_many :news_feed_default_industries, :dependent=>:destroy
   has_many :industries, :through=>:news_feed_default_industries
   serialize :companies_id, Array
-
+  scope :today, lambda { where("DATE(created_at) = '#{Date.today.to_s(:db)}'")}
+  scope :weekly, lambda { where("DATE(created_at) >= ? AND created_at <= ?",Date.today.beginning_of_week.to_s ,Date.today.end_of_week.to_s  )}
   def industry_ids=(ids)
     return if ids[0].blank?
     ids[0].split(',').each do |id|
