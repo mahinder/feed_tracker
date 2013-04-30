@@ -24,6 +24,7 @@ gem 'consistent_company', :git => 'git://github.com/vibhor86/consistent_company.
 gem "cancan"
 gem "smart_tuple"
 gem 'will_paginate', '~> 3.0'
+gem 'simple_form'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
