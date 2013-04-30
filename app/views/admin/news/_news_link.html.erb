@@ -2,5 +2,5 @@
 <% description_id = "description_#{news.id}" %>
 <%= link_to((truncate headline, :length => 65), "javascript:openPopup('#{news.url}', '#{news.id}');", :onMouseover => "toggleDisplay('#{description_id}')", :onMouseout => "toggleDisplay('#{description_id}')") -%>
 <div id ="<%= description_id %>" style="z-index: 200;width:500px;padding:5px;position: absolute;border-width: 1px;background-color: white;display: none;border-style: solid;border-color: black">
-  <%=(news.description).html_safe%>
+  <%=(news.description).html_safe if news.description%>
 </div>
