@@ -6,6 +6,7 @@ FeedTracker::Application.routes.draw do
     resources  :rss_feeds do
       collection do
         post :create_bulk_rss_feeds
+        get :retrive_information
       end
     end
   end

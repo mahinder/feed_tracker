@@ -16,6 +16,15 @@ module Api
       end   
       render :json => {status: "200 ok" }
     end 
+    
+    def retrive_information
+      
+      
+      
+    end
+    
+    
+    
 
     private
     def restrict_access

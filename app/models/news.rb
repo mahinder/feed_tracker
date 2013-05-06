@@ -19,7 +19,8 @@ class News < ActiveRecord::Base
   belongs_to :news_type
   belongs_to :user
   scope :pending_enrichment, :conditions => {:is_enriched => false}
-
+  scope :pending, :conditions => {:is_enriched => false}
+  
   def clear_tags
     self.industries_in_news.delete_all
     self.locations_in_news.delete_all

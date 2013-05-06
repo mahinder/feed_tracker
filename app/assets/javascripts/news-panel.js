@@ -46,6 +46,15 @@ var changeNewsState = function(news_id, new_state) {
         success: function(data) {
            if(data.valid)
             {
+                if(new_state == "block")
+                    {
+                        $('#news-'+news_id+' tr:first-child').css('background-color','lightgray')
+                    }else
+                     {
+                         $('#news-'+news_id+' tr:first-child').css('background-color','#87D48D')
+                     }   
+                        
+                
                 hideBlockLockRow(data.news);
             }    
             
