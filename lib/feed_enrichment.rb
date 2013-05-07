@@ -10,7 +10,8 @@ class FeedEnrichment
       news.calais_data = response_raw
       response = Calais::Response.new response_raw
       response.entities.each do |entity|
-       case entity.type
+      begin 
+      case entity.type
         when 'Company'
           company_name = entity.attributes['name']
           CompaniesInNews.create_company_tag(news.id, company_name) if company_name.split(' ').count < 5 #The number of words is a company is not a standard. It is based on a hunch.
@@ -21,6 +22,9 @@ class FeedEnrichment
           industry_name = entity.attributes['name']
           IndustriesInNews.create_industry_tag news.id, industry_name
         end
+      rescue
+        next
+      end    
       end
       news.is_enriched = true
       news.save!
