@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20133014151048) do
+ActiveRecord::Schema.define(:version => 20133014151049) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20133014151048) do
     t.string   "feed_url"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.text     "tagged_for"
   end
 
   create_table "news_indices", :force => true do |t|

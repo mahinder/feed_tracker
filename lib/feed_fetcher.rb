@@ -18,7 +18,8 @@ class FeedFetcher
             :news_type_id => news_feed.news_type_id,
             :published_at=>published_at,
             :url=> entry.url,
-            :description => (entry.content || entry.summary) )
+            :description => (entry.content || entry.summary),
+            :news_feed_id => news_feed.id)
           if news.save
             news.industries_in_news_ids = default_industries.collect{|i| i.industry_id}
             news.locations_in_news_ids = default_locations.collect{|l| l.location_id}

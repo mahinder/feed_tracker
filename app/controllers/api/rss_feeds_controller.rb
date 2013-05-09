@@ -9,7 +9,8 @@ module Api
     def create_bulk_rss_feeds 
       params[:feeds].each do |feed|
         begin
-          NewsFeed.create!(:user_id => @user.id , :feed_url => feed) if feed =~ URI::regexp 
+         feed_params =  Rack::Utils.parse_query URI(feed).query
+         NewsFeed.create!(:user_id => @user.id , :feed_url => feed , :tagged_for => feed_params['tags']) if feed =~ URI::regexp 
         rescue
           next
         end
