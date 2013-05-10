@@ -3,6 +3,7 @@ class CreateNewsTypes < ActiveRecord::Migration
     create_table :news_types do |t|
       t.string :name
     end
+   
   end
 
   def self.down

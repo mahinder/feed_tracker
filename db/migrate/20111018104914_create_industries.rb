@@ -3,7 +3,9 @@ class CreateIndustries < ActiveRecord::Migration
     create_table :industries do |t|
       t.string :name
     end
+    Industry.fill_it_up
     add_index :industries,:name
+    
   end
 
   def self.down

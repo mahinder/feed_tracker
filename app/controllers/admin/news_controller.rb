@@ -65,6 +65,7 @@ class Admin::NewsController < ApplicationController
   # POST /news.xml
   def create
     @news = News.new(params[:news])
+    @news.user_id = current_user.id 
     if @news.save
       flash[:notice] = 'News was successfully created.'
       redirect_to admin_news_path(@news)

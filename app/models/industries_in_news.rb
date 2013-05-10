@@ -1,14 +1,14 @@
 class IndustriesInNews < ActiveRecord::Base
-  belongs_to :feed_entry
+  belongs_to :news
   belongs_to :industry
   validates :news_id,:industry_id , :presence => true
-  validates :industry_id,:uniqueness => {:scope=> :feed_entry_id}
-  
+  validates :industry_id,:uniqueness => {:scope=> :news_id}
+  attr_accessible :industry_id , :news_id
   def self.create_industry_tag news_id, name
     unless name.nil?
       industries = IndustriesInNews.matching_industries(name)
       industries.each do |industry|
-        IndustriesInNews.find_or_create_by_feed_entry_id_and_industry_id :feed_entry_id=>news_id, :industry_id=>industry.id unless industry.nil?
+        IndustriesInNews.find_or_create_by_feed_entry_id_and_industry_id :news_id=>news_id, :industry_id=>industry.id unless industry.nil?
       end
     end
   end

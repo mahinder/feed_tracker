@@ -1,5 +1,5 @@
 class News < ActiveRecord::Base
-  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data , :industry_ids, :location_ids, :job_title_ids, :job_function_ids
+  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data , :industry_ids, :location_ids, :job_title_ids, :job_function_ids ,:ready , :blocked
   has_many :news_indices, :dependent => :destroy, :class_name => 'NewsIndex'
   belongs_to :news_feed
   has_many :people_in_news, :dependent => :destroy, :class_name => 'PeopleInNews'

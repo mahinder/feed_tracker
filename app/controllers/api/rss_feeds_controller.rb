@@ -1,16 +1,18 @@
 module Api 
   class RssFeedsController < ApplicationController
-
     protect_from_forgery :except => :create_bulk_rss_feeds    
     skip_before_filter :authenticate_user!
     before_filter :restrict_access
     respond_to :json
+    require 'ruby_debug'
     
     def create_bulk_rss_feeds 
       params[:feeds].each do |feed|
         begin
+         debugger
          feed_params =  Rack::Utils.parse_query URI(feed).query
-         NewsFeed.create!(:user_id => @user.id , :feed_url => feed , :tagged_for => feed_params['tags']) if feed =~ URI::regexp 
+         newsfeed = NewsFeed.new(:user_id => @user.id , :feed_url => feed , :tagged_for => feed_params['tags'].split(',')) if feed =~ URI::regexp 
+         newsfeed.save!
         rescue
           next
         end

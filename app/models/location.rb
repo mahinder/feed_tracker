@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
 validates :name ,:presence => true ,:uniqueness => true
-
+ attr_accessible :name 
   def self.tag_in_news(news_id, location_name)
     country_code = Geocoder.search(location_name).first.country_code
     location_ids = Thunderbolt::Location.instance.search(country_code)

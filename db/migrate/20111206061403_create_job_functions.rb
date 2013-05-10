@@ -3,6 +3,7 @@ class CreateJobFunctions < ActiveRecord::Migration
     create_table :job_functions do |t|
       t.string :name
     end
+   
   end
 
   def self.down

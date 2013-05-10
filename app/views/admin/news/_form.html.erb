@@ -5,11 +5,13 @@
     <%=f.inputs do %>
       <%=f.input :url, :required=>false, :input_html => { :size => 50 }%>
       <%=f.input :headline, :input_html => { :size => 50 }%>
+      <%= f.input :description , :input_html => {  :rows => 10, :cols => 20}%>
       <%#=f.input :news_source %>
       <%=f.input :published_at, :as=>:string, :input_html => { :size => 50 }%>      
       <%=f.input :news_type, :as=>:select %>
       <%if @news.id%>
-      <%= render :partial=>'news_link', :locals=>{:news => @news} %>
+        <%= render :partial=>'news_link', :locals=>{:news => @news} %>
+      <%end%>
         <div class="side-by-side clearfix" style="width:600px;z-index: 200">
           <%=f.input :industries, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
           <%=f.input :locations, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
@@ -18,7 +20,7 @@
         </div>
         <%=f.input :ready,:as=>:boolean,:required=>false%><br/>
         <%=f.input :blocked, :as=>:boolean,:required=>false%>
-      <%end%>
+      
     <%end%>
     <%= f.buttons do %>
       <%= f.commit_button :label => "Save" %>
