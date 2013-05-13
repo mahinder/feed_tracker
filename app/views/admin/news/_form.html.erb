@@ -6,21 +6,49 @@
       <%=f.input :url, :required=>false, :input_html => { :size => 50 }%>
       <%=f.input :headline, :input_html => { :size => 50 }%>
       <%= f.input :description , :input_html => {  :rows => 10, :cols => 20}%>
-      <%#=f.input :news_source %>
+    <%#=f.input :news_source %>
       <%=f.input :published_at, :as=>:string, :input_html => { :size => 50 }%>      
       <%=f.input :news_type, :as=>:select %>
       <%if @news.id%>
         <%= render :partial=>'news_link', :locals=>{:news => @news} %>
       <%end%>
-        <div class="side-by-side clearfix" style="width:600px;z-index: 200">
-          <%=f.input :industries, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
-          <%=f.input :locations, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
-          <%=f.input :job_titles, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
-          <%=f.input :job_functions, :as=>:select,:required=>false,:input_html => { :class => "chzn-select",:style=>"width:600px",:size=>8} %>
-        </div>
-        <%=f.input :ready,:as=>:boolean,:required=>false%><br/>
-        <%=f.input :blocked, :as=>:boolean,:required=>false%>
+      <li class="select optional" id="news_industries_input">
+        <label for="news_industries_id">Industries</label>
+        <%=select_tag "industries", options_from_collection_for_select(Industry.all, "name", "name"),:prompt => "select"%>
+      </li> 
+      <li class="select optional" id="news_locations_input">
+        <label for="news_locations_id">Locations</label>
+        <%=  select_tag "locations", options_from_collection_for_select(Location.all, "name", "name"),:prompt => "select"%><br/>
+      </li> 
+      <li class="select optional" id="news_job_title_input">
+        <label for="news_job_title_id">Job Titles</label>
+        <%=  select_tag "job_titles", options_from_collection_for_select(JobTitle.all, "name", "name"),:prompt => "select"%><br/>
+      </li> 
+      <li class="select optional" id="news_companies_input">
+        <label for="news_companies_id">Companies</label>
+        <%=select_tag "companies", options_from_collection_for_select(Company.all, "name", "name") ,:prompt => "select"%>
+      </li>
+      <%#*<li class="select optional" id="news_job_functions_input">%>
+        <%#*<label for="news_job_functions_id">Job Functions</label>%>
+        <%#=select_tag "job_functions", options_from_collection_for_select(JobFunction.all, "id", "name")%><br/>
+      <%#*</li>%> 
+       
+      <li class="radio optional" id="news_ready_input">
+        <fieldset>
+                  <ol>
+                     <li class="ready_true">
+                       <label for="news_ready_true">
+                         <input id="news_ready_true" name="ready" type="radio" > Ready</label>
+                     </li>
+                     <li class="ready_false">
+                       <label for="news_ready_false">
+                         <input checked="checked" id="news_block_true" name="ready" type="radio" value="false">Blocked</label>
+                     </li>
+                   </ol>
+        </fieldset>
+      </li>
       
+
     <%end%>
     <%= f.buttons do %>
       <%= f.commit_button :label => "Save" %>

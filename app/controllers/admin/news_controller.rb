@@ -2,7 +2,7 @@ class Admin::NewsController < ApplicationController
   #before_filter :protect_admin_access
   load_and_authorize_resource
   layout "admin"
-  require 'ruby-debug'
+  require "ruby-debug"
   def news_sort_order
     "id desc"
   end
@@ -64,13 +64,21 @@ class Admin::NewsController < ApplicationController
   # POST /news
   # POST /news.xml
   def create
-    @news = News.new(params[:news])
-    @news.user_id = current_user.id 
-    if @news.save
-      flash[:notice] = 'News was successfully created.'
-      redirect_to admin_news_path(@news)
-    else
-      redirect_to new_admin_news_path
+
+    News.transaction do 
+      news = News.new(params[:news])
+      news.user_id = current_user.id 
+      if news.save
+        news_id = news.id
+        flash[:notice] = 'News was successfully created.'
+        CompaniesInNews.create_company_tag news.id, params[:companies] if params[:companies].count < 5  unless params[:companies].blank?
+        IndustriesInNews.create_industry_tag news.id, params[:industries] unless params[:industries].blank?
+        Location.tag_in_news(news_id, params[:locations]) unless params[:locations].blank?
+        JobTitle.tag_in_news(news_id, params[:job_titles]) unless params[:job_titles].blank?
+        redirect_to admin_news_path(news)
+      else
+        redirect_to new_admin_news_path
+      end 
     end
   end
 

@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20133014151049) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.text     "tagged_for"
+    t.string   "scope"
   end
 
   create_table "news_indices", :force => true do |t|

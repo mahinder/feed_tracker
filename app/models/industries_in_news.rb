@@ -8,7 +8,7 @@ class IndustriesInNews < ActiveRecord::Base
     unless name.nil?
       industries = IndustriesInNews.matching_industries(name)
       industries.each do |industry|
-        IndustriesInNews.find_or_create_by_feed_entry_id_and_industry_id :news_id=>news_id, :industry_id=>industry.id unless industry.nil?
+        IndustriesInNews.find_or_create_by_news_id_and_industry_id :news_id=>news_id, :industry_id=>industry.id unless industry.nil?
       end
     end
   end

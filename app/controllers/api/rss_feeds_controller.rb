@@ -11,7 +11,7 @@ module Api
         begin
          debugger
          feed_params =  Rack::Utils.parse_query URI(feed).query
-         newsfeed = NewsFeed.new(:user_id => @user.id , :feed_url => feed , :tagged_for => feed_params['tags'].split(',')) if feed =~ URI::regexp 
+         newsfeed = NewsFeed.new(:user_id => @user.id , :feed_url => feed , :tagged_for => feed_params['tags'].split(','),:scope =>  feed_params['scope']) if feed =~ URI::regexp 
          newsfeed.save!
         rescue
           next
