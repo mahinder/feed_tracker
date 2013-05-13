@@ -6,7 +6,7 @@ class FeedEnrichment
     news_list ||= News.pending_enrichment || []
     news_list.each do |news|
       #      tagged_for = news.news_feed.tagged_for
-      if ["InCompanies","All"].include? news.scope
+      if ["InCompanies","All"].include? news.news_feed.scope
         begin
           response_raw = Calais.enlighten(:content => "#{news.headline}\n#{Sanitize.clean(news.description)}",:content_type => :html,:license_id => @calais_key )
           news.calais_data = response_raw
@@ -35,12 +35,15 @@ class FeedEnrichment
         rescue
           next
         end
-        if ["ByCompanies","All"].include? news.scope
+        if ["ByCompanies","All"].include? news.news_feed.scope
           tagged_for.each do |tag|
             CompaniesInNews.create_company_tag(news.id, tag) if tag.split(' ').count < 5
           end
+          news.is_enriched = true
+      news.save!
         end
       end
+      
     end if news_list
   end
 end

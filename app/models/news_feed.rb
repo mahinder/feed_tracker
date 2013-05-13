@@ -3,7 +3,7 @@ class NewsFeed < ActiveRecord::Base
   belongs_to :news_type
   has_many :news
   validates :feed_url , :uniqueness => {:scope => :user_id}
-  attr_accessible :user_id, :news_type_id ,:feed_url ,:tagged_for
+  attr_accessible :user_id, :news_type_id ,:feed_url ,:tagged_for ,:scope
   has_many :news_feed_default_locations, :dependent=>:destroy
   has_many :locations, :through=>:news_feed_default_locations
   has_many :news_feed_default_industries, :dependent=>:destroy
