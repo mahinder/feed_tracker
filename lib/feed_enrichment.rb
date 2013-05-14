@@ -37,7 +37,6 @@ class FeedEnrichment
  end
  
  def  tagging_in_company news
-    
           response_raw = Calais.enlighten(:content => "#{news.headline}\n#{Sanitize.clean(news.description)}",:content_type => :html,:license_id => @calais_key )
           news.calais_data = response_raw
           response = Calais::Response.new response_raw
