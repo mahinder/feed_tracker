@@ -64,14 +64,18 @@ class Admin::NewsController < ApplicationController
   # POST /news
   # POST /news.xml
   def create
-
     News.transaction do 
       news = News.new(params[:news])
       news.user_id = current_user.id 
-      if news.save
+      if params["ready"] == "on"
+        news.ready = true
+      else
+        news.block = true
+      end
+      if news.save!
         news_id = news.id
         flash[:notice] = 'News was successfully created.'
-        CompaniesInNews.create_company_tag news.id, params[:companies] if params[:companies].count < 5  unless params[:companies].blank?
+        CompaniesInNews.create_company_tag(news.id, params[:companies]) if !params[:companies].blank? && params[:companies].split(' ').count < 5
         IndustriesInNews.create_industry_tag news.id, params[:industries] unless params[:industries].blank?
         Location.tag_in_news(news_id, params[:locations]) unless params[:locations].blank?
         JobTitle.tag_in_news(news_id, params[:job_titles]) unless params[:job_titles].blank?

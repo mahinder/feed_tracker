@@ -34,7 +34,10 @@
           <b>Industries:</b>
           <%= @news.industries.collect{|l| l.name}.join ', ' %>
         </p>
-
+        <p>
+          <b>Companies:</b>
+          <%= @news.companies.collect{|l| l.name}.join ', ' %>
+        </p>
         <p>
           <b>Locations:</b>
           <%= @news.locations.collect{|l| l.name}.join ', ' %>
