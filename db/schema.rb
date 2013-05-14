@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20133014151049) do
+ActiveRecord::Schema.define(:version => 20130401060344) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20133014151049) do
     t.integer  "news_feed_id"
     t.string   "reason"
     t.text     "calais_data"
+    t.string   "feed_domain"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.boolean  "blocked",      :default => false

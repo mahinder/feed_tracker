@@ -1,4 +1,0 @@
-<%= select(:user, :top_connectors,
-  @top_connectors.collect {|tc| (tc.full_name.strip.blank?) ? [ tc.email, tc.id ] : [ "#{tc.full_name} - <#{tc.email}>", tc.id ] },
-  { :include_blank => false, :prompt => "Select Top Connector" },
-  {:class => "user_select_box"})%>

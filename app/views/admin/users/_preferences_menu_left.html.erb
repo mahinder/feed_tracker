@@ -1,7 +1,0 @@
-<ul class="step3_left_tabs">
-  <%@nav_links.each do |nav_link|%>
-    <li>
-      <%=link_to "<span>#{nav_link}</span>", {:filter=>nav_link,:user_id=>user_id}, :class=>"#{'active' if nav_link == @filter}" %>
-    </li>
-  <%end%>
-</ul>

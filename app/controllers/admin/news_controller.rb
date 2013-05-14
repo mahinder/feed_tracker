@@ -45,7 +45,6 @@ class Admin::NewsController < ApplicationController
   # GET /news/new.xml
   def new
     @news = News.new
-    #   @news.news_source = NewsSource.last
     @news.published_at = Time.now
     respond_to do |format|
       format.html # new.html.erb
@@ -65,13 +64,8 @@ class Admin::NewsController < ApplicationController
   # POST /news.xml
   def create
     News.transaction do 
-      news = News.new(params[:news])
-      news.user_id = current_user.id 
-      if params["ready"] == "on"
-        news.ready = true
-      else
-        news.block = true
-      end
+      news = News.new(params[:news].merge(:user_id => current_user.id ))
+      params["ready"] == "on" ? news.ready = true : news.blocked = true
       if news.save!
         news_id = news.id
         flash[:notice] = 'News was successfully created.'

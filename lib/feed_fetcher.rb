@@ -11,7 +11,8 @@ class FeedFetcher
         begin
           title = entry.title
           published_at = entry.published.localtime
-      
+          temp = Domainatrix.parse(news_feed.feed_url)
+          feed_domain = "#{temp.domain}.#{temp.public_suffix}"
           news = News.new(
             :user_id => news_feed.user_id,
             :headline=>title,
@@ -19,7 +20,8 @@ class FeedFetcher
             :published_at=>published_at,
             :url=> entry.url,
             :description => (entry.content || entry.summary),
-            :news_feed_id => news_feed.id)
+            :news_feed_id => news_feed.id,
+            :feed_domain => feed_domain)
           if news.save
             news.industries_in_news_ids = default_industries.collect{|i| i.industry_id}
             news.locations_in_news_ids = default_locations.collect{|l| l.location_id}
