@@ -1,8 +1,9 @@
 require 'rubygems'
 require 'feedzirra'
+require 'ruby-debug'
 class FeedFetcher
   
-  def fetch_feed
+  def self.fetch_feed
     NewsFeed.all.each do |news_feed|
       default_industries = news_feed.news_feed_default_industries
       default_locations = news_feed.news_feed_default_locations
@@ -22,10 +23,10 @@ class FeedFetcher
             :description => (entry.content || entry.summary),
             :news_feed_id => news_feed.id,
             :feed_domain => feed_domain)
-          if news.save
-            news.industries_in_news_ids = default_industries.collect{|i| i.industry_id}
-            news.locations_in_news_ids = default_locations.collect{|l| l.location_id}
-          end
+            if news.save
+              news.industries_in_news_ids = default_industries.collect{|i| i.industry_id}
+              news.locations_in_news_ids = default_locations.collect{|l| l.location_id}
+            end 
         rescue
           next
         end       

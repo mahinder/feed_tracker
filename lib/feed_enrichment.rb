@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'calais'
 class FeedEnrichment 
-  def feed_enrichment
+  def self.feed_enrichment
     @calais_key = 'jwua5bvnh7w2m3ks3uzsy9gy'
     news_list ||= News.pending_enrichment || []
     news_list.each do |news|      
@@ -28,7 +28,7 @@ class FeedEnrichment
    end if news_list
   end
   
- def  tagging_by_company news
+ def  self.tagging_by_company news
    tagged_for = news.news_feed.tagged_for
    tagged_for.each do |tag|
       CompaniesInNews.create_company_tag(news.id, tag) if tag.split(' ').count < 5
@@ -36,7 +36,7 @@ class FeedEnrichment
    is_enriched news
  end
  
- def  tagging_in_company news
+ def  self.tagging_in_company news
           response_raw = Calais.enlighten(:content => "#{news.headline}\n#{Sanitize.clean(news.description)}",:content_type => :html,:license_id => @calais_key )
           news.calais_data = response_raw
           response = Calais::Response.new response_raw
@@ -63,10 +63,12 @@ class FeedEnrichment
         
  end
  
- def is_enriched news
+ def self.is_enriched news
    news.is_enriched = true
    news.save!
  end
   
   
 end
+
+

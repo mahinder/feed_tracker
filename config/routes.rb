@@ -5,8 +5,7 @@ FeedTracker::Application.routes.draw do
   namespace :api do
     resources  :rss_feeds do
       collection do
-        post :create_bulk_rss_feeds
-        get :retrive_information
+        post :create_bulk_rss_feeds , :mock_user_response
       end
     end
   end

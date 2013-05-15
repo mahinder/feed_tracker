@@ -6,7 +6,7 @@ class News < ActiveRecord::Base
   has_many :companies_in_news, :dependent => :destroy, :class_name => 'CompaniesInNews'
   has_many :companies, :through => :companies_in_news
   has_many :people, :through => :people_in_news
-  validates :headline , :presence => true 
+  validates :headline , :presence => true ,:uniqueness => {:scope=> :user_id} 
   has_many :industries_in_news, :dependent => :destroy, :class_name => 'IndustriesInNews'
   has_many :industries, :through => :industries_in_news
   has_many :locations_in_news, :dependent => :destroy, :class_name => 'LocationsInNews'
