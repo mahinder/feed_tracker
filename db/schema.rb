@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20130401060344) do
     t.string   "reason"
     t.text     "calais_data"
     t.string   "feed_domain"
+    t.boolean  "is_return",    :default => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.boolean  "blocked",      :default => false
@@ -188,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20130401060344) do
   create_table "users", :force => true do |t|
     t.string   "user_name"
     t.boolean  "is_admin"
+    t.string   "end_point"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "email",                  :default => "", :null => false

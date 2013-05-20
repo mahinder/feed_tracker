@@ -53,6 +53,7 @@ class All < ActiveRecord::Migration
       t.string :reason
       t.text :calais_data
       t.string :feed_domain
+      t.boolean :is_return , :default => false
       t.timestamps
     end
     add_column :news, :blocked, :boolean, :default=>false
@@ -164,6 +165,7 @@ class All < ActiveRecord::Migration
     create_table :users do |t|
       t.string  :user_name
       t.boolean :is_admin
+      t.string  :end_point
       t.timestamps
     end
     

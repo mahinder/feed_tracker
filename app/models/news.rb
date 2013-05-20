@@ -1,5 +1,5 @@
 class News < ActiveRecord::Base
-  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data , :industry_ids, :location_ids, :job_title_ids, :job_function_ids ,:ready , :blocked ,:feed_domain
+  attr_accessible :user_id, :news_type_id ,:description, :headline, :published_at, :url , :is_enriched ,:news_feed_id, :calais_data , :industry_ids, :location_ids, :job_title_ids, :job_function_ids ,:ready , :blocked ,:feed_domain,:is_return
   has_many :news_indices, :dependent => :destroy, :class_name => 'NewsIndex'
   belongs_to :news_feed
   has_many :people_in_news, :dependent => :destroy, :class_name => 'PeopleInNews'
@@ -19,8 +19,7 @@ class News < ActiveRecord::Base
   belongs_to :news_type
   belongs_to :user
   scope :pending_enrichment, :conditions => {:is_enriched => false}
-  scope :pending, :conditions => {:is_enriched => false}
-  
+#  scope :pending, :conditions => {:is_enriched => false}
   def clear_tags
     self.industries_in_news.delete_all
     self.locations_in_news.delete_all

@@ -19,6 +19,13 @@ FeedTracker::Application.routes.draw do
       end
     end
   end
+  namespace :mock do
+    resources :user_apis do
+      collection do
+         post  :mock_user_response
+      end
+    end
+  end
   
    namespace :rm do |rm|
     resources :companies do

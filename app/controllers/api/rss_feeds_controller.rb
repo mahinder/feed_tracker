@@ -19,9 +19,8 @@ module Api
       render :json => {status: "200 ok" }
     end 
     
-    def mock_user_response
-      p params
-    end
+    
+    
     
     
     
