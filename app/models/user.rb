@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   has_many :news
   has_many :news_feeds
   #validates_presence_of :user_name
-  validates :user_name, :presence => true, :uniqueness => true
+  validates :user_name,:end_point , :presence => true, :uniqueness => true
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,:user_name,:is_admin ,:end_point
   
